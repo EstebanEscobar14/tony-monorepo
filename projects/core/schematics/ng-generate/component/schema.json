@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "TonyUIGenerateComponentSchema",
+  "title": "TonyUI component generator (copy-paste style)",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The component to copy (accordion, alert, avatar, badge, breadcrumb, button, button-group, calendar, card, carousel, chat-bubble, checkbox, combobox, diff, divider, dock, drawer, dropdown, fab, fieldset, file-input, indicator, input, kbd, link, list, loader, modal, navbar, pagination, progress, radial-progress, radio, rating, select, sheet, skeleton, slider, stat, status, steps, switch, table, tabs, textarea, timeline, toast, toggle, tooltip, validator).",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
+    },
+    "path": {
+      "type": "string",
+      "default": "src/app/ui",
+      "description": "The path to copy the component into."
+    },
+    "prefix": {
+      "type": "string",
+      "default": "ton",
+      "description": "The prefix to use for selectors."
+    },
+    "skipTests": {
+      "type": "boolean",
+      "default": false,
+      "description": "Skip copying test files."
+    }
+  },
+  "required": ["name"]
+}
