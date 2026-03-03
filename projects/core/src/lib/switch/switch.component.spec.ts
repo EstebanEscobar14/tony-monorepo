@@ -1,0 +1,98 @@
+import { Component, signal } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { TonSwitchComponent } from './switch.component';
+
+@Component({
+  standalone: true,
+  imports: [TonSwitchComponent],
+  template: `<ton-switch [(checked)]="checked" [disabled]="disabled()" />`,
+})
+class TestHostComponent {
+  checked = signal(false);
+  disabled = signal(false);
+}
+
+describe('TonSwitchComponent', () => {
+  let fixture: ComponentFixture<TestHostComponent>;
+  let button: HTMLButtonElement;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TestHostComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(TestHostComponent);
+    fixture.detectChanges();
+    button = fixture.nativeElement.querySelector('button');
+  });
+
+  it('should have switch role', () => {
+    expect(button.getAttribute('role')).toBe('switch');
+  });
+
+  it('should be unchecked by default', () => {
+    expect(button.getAttribute('aria-checked')).toBe('false');
+    expect(button.className).toContain('bg-input');
+  });
+
+  it('should toggle on click', () => {
+    button.click();
+    fixture.detectChanges();
+    expect(button.getAttribute('aria-checked')).toBe('true');
+    expect(button.className).toContain('bg-primary');
+  });
+
+  it('should not toggle when disabled', () => {
+    fixture.componentInstance.disabled.set(true);
+    fixture.detectChanges();
+    expect(button.disabled).toBe(true);
+  });
+});
+
+@Component({
+  standalone: true,
+  imports: [ReactiveFormsModule, TonSwitchComponent],
+  template: `<ton-switch [formControl]="ctrl" />`,
+})
+class ReactiveFormHost {
+  ctrl = new FormControl(false);
+}
+
+describe('TonSwitchComponent — Reactive Forms', () => {
+  let fixture: ComponentFixture<ReactiveFormHost>;
+  let button: HTMLButtonElement;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ReactiveFormHost],
+    }).compileComponents();
+    fixture = TestBed.createComponent(ReactiveFormHost);
+    fixture.detectChanges();
+    button = fixture.nativeElement.querySelector('button');
+  });
+
+  it('should update view when FormControl value changes (writeValue)', () => {
+    fixture.componentInstance.ctrl.setValue(true);
+    fixture.detectChanges();
+    expect(button.getAttribute('aria-checked')).toBe('true');
+  });
+
+  it('should update FormControl when user interacts (onChange)', () => {
+    button.click();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.ctrl.value).toBe(true);
+  });
+
+  it('should disable via FormControl.disable() (setDisabledState)', () => {
+    fixture.componentInstance.ctrl.disable();
+    fixture.detectChanges();
+    expect(button.disabled).toBe(true);
+  });
+
+  it('should mark as touched on blur (onTouched)', () => {
+    expect(fixture.componentInstance.ctrl.touched).toBe(false);
+    button.dispatchEvent(new Event('blur'));
+    expect(fixture.componentInstance.ctrl.touched).toBe(true);
+  });
+});
