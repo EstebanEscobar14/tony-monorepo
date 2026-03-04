@@ -1,0 +1,88 @@
+<section class="page">
+  <header>
+    <p class="eyebrow">mfe-treasury</p>
+    <h2>Cash positioning de alto volumen</h2>
+    <p>
+      Este remote demuestra lazy loading, deferrable views y virtual scrolling para
+      {{ rowCount }} registros desde la libreria compartida.
+    </p>
+  </header>
+
+  @defer (on viewport) {
+    <div class="load-status" aria-live="polite">
+      <span>{{ loadedRows() }} / {{ rowCount }} registros preparados</span>
+      @if (loadingRows()) {
+        <span tonBadge variant="outline">carga progresiva activa</span>
+      } @else {
+        <span tonBadge variant="secondary">dataset completo listo</span>
+      }
+    </div>
+
+    <div class="desktop-table">
+      <ton-data-table
+        [columns]="columns"
+        [data]="rows()"
+        [trackBy]="'id'"
+        [paginated]="false"
+        [filterable]="false"
+        [showColumnToggle]="true"
+        [virtualScroll]="true"
+        [virtualItemSize]="virtualItemSize"
+        virtualViewportHeight="min(68vh, 35rem)"
+      ></ton-data-table>
+    </div>
+
+    <div class="mobile-cards" aria-label="Vista compacta de tesoreria">
+      @for (row of mobilePreviewRows(); track row.id) {
+        <article class="treasury-card">
+          <div class="treasury-card-top">
+            <div>
+              <p class="card-label">Cuenta</p>
+              <strong>{{ row.account }}</strong>
+            </div>
+            <span tonBadge [variant]="row.risk === 'High' ? 'destructive' : row.risk === 'Medium' ? 'outline' : 'secondary'">
+              {{ row.risk }}
+            </span>
+          </div>
+
+          <dl class="treasury-card-grid">
+            <div>
+              <dt>Region</dt>
+              <dd>{{ row.region }}</dd>
+            </div>
+            <div>
+              <dt>Owner</dt>
+              <dd>{{ row.owner }}</dd>
+            </div>
+            <div>
+              <dt>Balance</dt>
+              <dd>{{ row.balance }}</dd>
+            </div>
+            <div>
+              <dt>Disponible</dt>
+              <dd>{{ row.available }}</dd>
+            </div>
+            <div>
+              <dt>Variacion</dt>
+              <dd>{{ row.change }}</dd>
+            </div>
+          </dl>
+        </article>
+      }
+
+      @if (canLoadMoreMobile()) {
+        <button tonBadge variant="outline" type="button" class="mobile-more" (click)="showMoreMobileRows()">
+          Ver 12 registros mas
+        </button>
+      } @else {
+        <p class="mobile-note">
+          Ya puedes revisar todos los registros que se han cargado hasta ahora en la vista movil.
+        </p>
+      }
+    </div>
+  } @placeholder {
+    <div class="deferred-placeholder">Preparando tabla de alto volumen...</div>
+  } @loading (minimum 300ms) {
+    <div class="deferred-placeholder">Cargando tabla virtualizada...</div>
+  }
+</section>
