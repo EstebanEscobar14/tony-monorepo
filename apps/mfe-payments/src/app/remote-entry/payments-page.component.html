@@ -1,0 +1,30 @@
+<section class="page">
+  <header>
+    <p class="eyebrow">mfe-payments</p>
+    <h2>Pipeline de pagos en tiempo real</h2>
+    <p>Remote Angular orientado a operaciones, desplegable y versionable de forma autonoma por dominio.</p>
+  </header>
+
+  <div class="toolbar">
+    <button tonBtn type="button" (click)="addPayment()">Nuevo pago</button>
+    <button tonBtn variant="outline" type="button" (click)="exportBatch()">Exportar lote</button>
+    <p class="summary">Pagos en lote: <strong>{{ payments().length }}</strong></p>
+  </div>
+
+  <p class="feedback">{{ feedback() }}</p>
+
+  <ul tonList variant="bordered" class="payment-list">
+    @for (payment of payments(); track payment.id) {
+      <li tonListItem>
+        <div tonListItemContent>
+          <strong>{{ payment.beneficiary }}</strong>
+          <p>{{ payment.id }} - {{ payment.channel }}</p>
+        </div>
+        <div tonListItemAction class="right">
+          <strong>{{ payment.amountLabel }}</strong>
+          <span tonBadge [variant]="badgeVariant(payment.status)">{{ payment.status }}</span>
+        </div>
+      </li>
+    }
+  </ul>
+</section>
