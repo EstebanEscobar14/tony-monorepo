@@ -1,0 +1,97 @@
+<section class="page">
+  <header>
+    <p class="eyebrow">mfe-compliance</p>
+    <h2>Supervision regulatoria preparada para reporting</h2>
+    <p>Listado principal con filtros simples y panel de detalle listo para evolucionar a reporting regulatorio.</p>
+  </header>
+
+  <div class="toolbar">
+    <div class="filter-group">
+      <label tonLabel for="compliance-search">Buscar</label>
+      <input
+        id="compliance-search"
+        tonInput
+        type="text"
+        [value]="query()"
+        (input)="setQuery(search.value)"
+        #search
+      />
+    </div>
+
+    <div class="filter-group">
+      <label tonLabel for="compliance-status">Estado</label>
+      <ton-select
+        id="compliance-status"
+        [options]="statusOptions"
+        [value]="selectedStatus()"
+        (valueChange)="setStatus($event)"
+        class="min-w-44"
+      />
+    </div>
+
+    <button tonBtn variant="outline" type="button" (click)="exportReport()">Exportar reporte</button>
+  </div>
+
+  <div class="layout">
+    <article tonCard>
+      <div tonCardHeader>
+        <h3 tonCardTitle>Casos</h3>
+        <p tonCardDescription>{{ cases().length }} registros filtrados</p>
+      </div>
+
+      <div tonCardContent tonList variant="bordered" class="case-list">
+        @for (item of cases(); track item.id) {
+          <button
+            tonListItem
+            type="button"
+            class="case-item"
+            [active]="selectedCaseId() === item.id"
+            [class.active]="selectedCaseId() === item.id"
+            (click)="selectCase(item)"
+          >
+            <div tonListItemContent>
+              <strong>{{ item.title }}</strong>
+              <p>{{ item.id }} · {{ item.owner }}</p>
+            </div>
+            <span tonListItemAction tonBadge>{{ item.status }}</span>
+          </button>
+        }
+      </div>
+    </article>
+
+    <article tonCard>
+      <div tonCardHeader>
+        <h3 tonCardTitle>Detalle</h3>
+        <p tonCardDescription>Vista resumida del caso seleccionado</p>
+      </div>
+
+      <div tonCardContent class="detail-panel">
+        @if (selectedCase(); as item) {
+          <div class="detail-header">
+            <h4>{{ item.title }}</h4>
+            <span tonBadge>{{ item.priority }}</span>
+          </div>
+          <p>{{ item.summary }}</p>
+          <dl>
+            <div>
+              <dt>ID</dt>
+              <dd>{{ item.id }}</dd>
+            </div>
+            <div>
+              <dt>Jurisdiccion</dt>
+              <dd>{{ item.jurisdiction }}</dd>
+            </div>
+            <div>
+              <dt>Owner</dt>
+              <dd>{{ item.owner }}</dd>
+            </div>
+            <div>
+              <dt>Ultima revision</dt>
+              <dd>{{ formatDate(item.updatedAt) }}</dd>
+            </div>
+          </dl>
+        }
+      </div>
+    </article>
+  </div>
+</section>
