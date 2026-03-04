@@ -1,0 +1,30 @@
+export const TABLE_DOC_ES = {
+  title: 'Table',
+  description: 'Una tabla altamente personalizable con variantes, densidad y características interactivas.',
+  interactiveExample: 'Ejemplo Interactivo',
+  interactiveExampleDesc: 'Alterna las características de la tabla de forma interactiva.',
+  directives: 'Directivas',
+  tableRoot: 'Table (raíz)',
+  directivesList: [
+    '<code class="font-mono text-xs bg-muted px-1 py-0.5 rounded">tonTable</code> — Elemento raíz de la tabla',
+    '<code class="font-mono text-xs bg-muted px-1 py-0.5 rounded">tonTableHeader</code> — Encabezado de tabla (thead)',
+    '<code class="font-mono text-xs bg-muted px-1 py-0.5 rounded">tonTableBody</code> — Cuerpo de tabla (tbody)',
+    '<code class="font-mono text-xs bg-muted px-1 py-0.5 rounded">tonTableRow</code> — Fila de tabla (tr)',
+    '<code class="font-mono text-xs bg-muted px-1 py-0.5 rounded">tonTableHead</code> — Celda de encabezado (th)',
+    '<code class="font-mono text-xs bg-muted px-1 py-0.5 rounded">tonTableCell</code> — Celda de datos (td)',
+    '<code class="font-mono text-xs bg-muted px-1 py-0.5 rounded">tonTableFooter</code> — Pie de tabla (tfoot)',
+    '<code class="font-mono text-xs bg-muted px-1 py-0.5 rounded">tonTableCaption</code> — Leyenda de tabla',
+  ],
+  accessibility: [
+    'Usa la semántica nativa de <code>&lt;table&gt;</code> para soporte completo de lectores de pantalla.',
+    'Las celdas de encabezado usan <code>&lt;th&gt;</code> para la asociación correcta de columnas.',
+    'El encabezado fijo mantiene la estructura del árbol de accesibilidad.',
+  ],
+  propDescriptions: {
+    variant: 'Variante visual de la tabla.',
+    density: 'Densidad del espaciado de celdas.',
+    hoverable: 'Habilitar efecto hover en filas.',
+    stickyHeader: 'Fijar el encabezado al hacer scroll.',
+    class: 'Clases CSS adicionales a aplicar.',
+  },
+};
