@@ -1,0 +1,259 @@
+import { Component, signal, computed, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
+import { CodeBlockComponent } from '../../shared/code-block';
+import { ComponentPreviewComponent } from '../../shared/component-preview';
+import { PropsTableComponent, type PropDef } from '../../shared/props-table';
+import { TonInputDirective, TonLabelDirective, TonButtonDirective } from '@tony-ui/core';
+import { I18nService } from '../../i18n/i18n.service';
+import { INPUT_DOC_EN } from '../../i18n/en/pages/input-doc';
+import { INPUT_DOC_ES } from '../../i18n/es/pages/input-doc';
+
+@Component({
+  selector: 'docs-input-form-example',
+  standalone: true,
+  imports: [ReactiveFormsModule, TonInputDirective, TonLabelDirective, TonButtonDirective],
+  template: `
+    <div class="space-y-4 w-full max-w-sm">
+      <div class="space-y-2">
+        <label tonLabel [variant]="emailVariant()">Email</label>
+        <input
+          tonInput
+          type="email"
+          placeholder="you&#64;example.com"
+          [variant]="emailVariant()"
+          [formControl]="email"
+        />
+        @if (email.touched && email.invalid) {
+          <p class="text-xs text-destructive">Please enter a valid email address.</p>
+        }
+      </div>
+      <div class="space-y-2">
+        <label tonLabel [variant]="messageVariant()">Message</label>
+        <textarea
+          tonInput
+          placeholder="Your message..."
+          rows="3"
+          [variant]="messageVariant()"
+          [formControl]="message"
+        ></textarea>
+        <p class="text-xs text-muted-foreground">{{ message.value?.length || 0 }}/500 characters</p>
+      </div>
+      <button tonBtn type="button" [disabled]="!email.valid || !message.valid" (click)="onSubmit()">
+        Send Message
+      </button>
+      @if (submitted()) {
+        <p class="text-sm text-green-600">Message sent successfully!</p>
+      }
+    </div>
+  `,
+})
+export class InputFormExampleComponent {
+  readonly email = new FormControl('', [Validators.required, Validators.email]);
+  readonly message = new FormControl('', [Validators.required, Validators.maxLength(500)]);
+  readonly submitted = signal(false);
+
+  private readonly emailEvents = toSignal(this.email.events);
+  private readonly messageEvents = toSignal(this.message.events);
+
+  readonly emailVariant = computed((): 'default' | 'error' | 'success' => {
+    this.emailEvents();
+    if (!this.email.touched) return 'default';
+    return this.email.valid ? 'success' : 'error';
+  });
+
+  readonly messageVariant = computed((): 'default' | 'error' | 'success' => {
+    this.messageEvents();
+    if (!this.message.touched) return 'default';
+    return this.message.valid ? 'success' : 'error';
+  });
+
+  onSubmit() {
+    if (this.email.valid && this.message.valid) {
+      this.submitted.set(true);
+      setTimeout(() => this.submitted.set(false), 3000);
+      this.email.reset();
+      this.message.reset();
+    }
+  }
+}
+
+@Component({
+  selector: 'docs-input-doc',
+  standalone: true,
+  imports: [CodeBlockComponent, ComponentPreviewComponent, PropsTableComponent, TonInputDirective, TonLabelDirective, InputFormExampleComponent],
+  template: `
+    <div class="space-y-8">
+      <div>
+        <h1 class="text-3xl font-bold tracking-tight">{{ t().title }}</h1>
+        <p class="text-muted-foreground mt-2">{{ t().description }}</p>
+      </div>
+
+      <section class="space-y-4">
+        <h2 class="text-xl font-semibold">{{ i18n.common().docSections.import }}</h2>
+        <docs-code-block [code]="importCode" language="typescript" />
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="text-xl font-semibold">{{ i18n.common().docSections.usage }}</h2>
+        <docs-component-preview [code]="basicCode">
+          <input tonInput placeholder="Enter your email" class="max-w-sm" />
+        </docs-component-preview>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="text-xl font-semibold">{{ t().withLabel }}</h2>
+        <docs-component-preview [code]="labelCode">
+          <div class="space-y-2 w-full max-w-sm">
+            <label tonLabel>Email</label>
+            <input tonInput type="email" placeholder="you&#64;example.com" />
+          </div>
+        </docs-component-preview>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="text-xl font-semibold">{{ i18n.common().docSections.variants }}</h2>
+        <docs-component-preview [code]="variantsCode">
+          <div class="space-y-3 w-full max-w-sm">
+            <input tonInput placeholder="Default" />
+            <input tonInput variant="error" placeholder="Error state" />
+            <input tonInput variant="success" placeholder="Success state" />
+          </div>
+        </docs-component-preview>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="text-xl font-semibold">{{ i18n.common().docSections.sizes }}</h2>
+        <docs-component-preview [code]="sizesCode">
+          <div class="space-y-3 w-full max-w-sm">
+            <input tonInput inputSize="sm" placeholder="Small" />
+            <input tonInput inputSize="md" placeholder="Medium" />
+            <input tonInput inputSize="lg" placeholder="Large" />
+          </div>
+        </docs-component-preview>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="text-xl font-semibold">{{ t().disabled }}</h2>
+        <docs-component-preview [code]="disabledCode">
+          <input tonInput disabled placeholder="Disabled input" class="max-w-sm" />
+        </docs-component-preview>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="text-xl font-semibold">{{ i18n.common().docSections.examples }}</h2>
+        <p class="text-sm text-muted-foreground">{{ t().examplesDesc }}</p>
+
+        <h3 class="text-lg font-medium">{{ t().formWithReactiveValidation }}</h3>
+        <docs-component-preview [code]="validationFormCode" language="typescript">
+          <docs-input-form-example />
+        </docs-component-preview>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="text-xl font-semibold">{{ i18n.common().docSections.apiReference }}</h2>
+        <h3 class="text-lg font-medium">{{ t().tonInputDirective }}</h3>
+        <docs-props-table [props]="inputProps()" />
+        <h3 class="text-lg font-medium mt-4">{{ t().tonLabelDirective }}</h3>
+        <docs-props-table [props]="labelProps()" />
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="text-xl font-semibold">{{ i18n.common().docSections.accessibility }}</h2>
+        <ul class="list-disc pl-6 space-y-1 text-sm text-muted-foreground">
+          @for (item of t().accessibility; track item) {
+            <li [innerHTML]="item"></li>
+          }
+        </ul>
+      </section>
+    </div>
+  `,
+})
+export class InputDocComponent {
+  readonly i18n = inject(I18nService);
+  readonly t = computed(() => this.i18n.locale() === 'es' ? INPUT_DOC_ES : INPUT_DOC_EN);
+
+  importCode = `import { TonInputDirective, TonLabelDirective } from '@tony-ui/core';`;
+
+  basicCode = `<input tonInput placeholder="Enter your email" />`;
+
+  labelCode = `<label tonLabel>Email</label>
+<input tonInput type="email" placeholder="you@example.com" />`;
+
+  variantsCode = `<input tonInput placeholder="Default" />
+<input tonInput variant="error" placeholder="Error state" />
+<input tonInput variant="success" placeholder="Success state" />`;
+
+  sizesCode = `<input tonInput inputSize="sm" placeholder="Small" />
+<input tonInput inputSize="md" placeholder="Medium" />
+<input tonInput inputSize="lg" placeholder="Large" />`;
+
+  disabledCode = `<input tonInput disabled placeholder="Disabled input" />`;
+
+  validationFormCode = `@Component({
+  imports: [ReactiveFormsModule, TonInputDirective, TonLabelDirective, TonButtonDirective],
+  template: \`
+    <form class="space-y-4 w-full max-w-sm" (ngSubmit)="onSubmit()">
+      <div class="space-y-2">
+        <label tonLabel [variant]="emailVariant()">Email</label>
+        <input tonInput type="email" placeholder="you@example.com"
+               [variant]="emailVariant()" [formControl]="email" />
+        @if (email.touched && email.invalid) {
+          <p class="text-xs text-destructive">Please enter a valid email address.</p>
+        }
+      </div>
+      <div class="space-y-2">
+        <label tonLabel [variant]="messageVariant()">Message</label>
+        <textarea tonInput placeholder="Your message..." rows="3"
+                  [variant]="messageVariant()" [formControl]="message"></textarea>
+        <p class="text-xs text-muted-foreground">{{ message.value?.length || 0 }}/500 characters</p>
+      </div>
+      <button tonBtn type="submit" [disabled]="!email.valid || !message.valid">Send Message</button>
+      @if (submitted()) {
+        <p class="text-sm text-green-600">Message sent successfully!</p>
+      }
+    </form>
+  \`,
+})
+export class ContactFormExample {
+  readonly email = new FormControl('', [Validators.required, Validators.email]);
+  readonly message = new FormControl('', [Validators.required, Validators.maxLength(500)]);
+  readonly submitted = signal(false);
+
+  private readonly emailEvents = toSignal(this.email.events);
+  private readonly messageEvents = toSignal(this.message.events);
+
+  readonly emailVariant = computed((): 'default' | 'error' | 'success' => {
+    this.emailEvents();
+    if (!this.email.touched) return 'default';
+    return this.email.valid ? 'success' : 'error';
+  });
+
+  readonly messageVariant = computed((): 'default' | 'error' | 'success' => {
+    this.messageEvents();
+    if (!this.message.touched) return 'default';
+    return this.message.valid ? 'success' : 'error';
+  });
+
+  onSubmit() {
+    if (this.email.valid && this.message.valid) {
+      this.submitted.set(true);
+      setTimeout(() => this.submitted.set(false), 3000);
+      this.email.reset();
+      this.message.reset();
+    }
+  }
+}`;
+
+  readonly inputProps = computed<PropDef[]>(() => [
+    { name: 'variant', type: "'default' | 'error' | 'success'", default: "'default'", description: this.t().propDescriptions.variant },
+    { name: 'inputSize', type: "'sm' | 'md' | 'lg'", default: "'md'", description: this.t().propDescriptions.inputSize },
+    { name: 'ariaDescribedBy', type: 'string', default: "''", description: this.t().propDescriptions.ariaDescribedBy },
+    { name: 'class', type: 'string', default: "''", description: this.t().propDescriptions.class },
+  ]);
+
+  readonly labelProps = computed<PropDef[]>(() => [
+    { name: 'variant', type: "'default' | 'error' | 'success'", default: "'default'", description: this.t().labelPropDescriptions.variant },
+    { name: 'class', type: 'string', default: "''", description: this.t().labelPropDescriptions.class },
+  ]);
+}
