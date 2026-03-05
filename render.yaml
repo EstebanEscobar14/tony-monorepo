@@ -1,0 +1,232 @@
+services:
+  - name: capitalflow-shell
+    type: web
+    runtime: docker
+    plan: free
+    branch: master
+    autoDeployTrigger: commit
+    healthCheckPath: /healthz
+    dockerfilePath: deploy/docker/shell.Dockerfile
+    dockerContext: .
+    envVars:
+      - key: MFE_PAYMENTS_URL
+        value: https://replace-with-mfe-payments-url.onrender.com
+      - key: MFE_TREASURY_URL
+        value: https://replace-with-mfe-treasury-url.onrender.com
+      - key: MFE_AUTH_URL
+        value: https://replace-with-mfe-auth-url.onrender.com
+      - key: MFE_COMPLIANCE_URL
+        value: https://replace-with-mfe-compliance-url.onrender.com
+      - key: MFE_ONBOARDING_URL
+        value: https://replace-with-mfe-onboarding-url.onrender.com
+      - key: MFE_ADMIN_URL
+        value: https://replace-with-mfe-admin-url.onrender.com
+      - key: ANALYTICS_ELEMENT_URL
+        value: https://replace-with-mfe-analytics-url.onrender.com/analytics-element.js
+      - key: DOCS_URL
+        value: https://capitalflow-docs.onrender.com
+    buildFilter:
+      paths:
+        - shell/**/*
+        - projects/core/**/*
+        - library/utils/**/*
+        - deploy/docker/shell.Dockerfile
+        - deploy/nginx/spa.conf
+        - tools/**/*
+        - package.json
+        - package-lock.json
+        - nx.json
+        - tsconfig.json
+        - tsconfig.base.json
+        - eslint.config.mjs
+
+  - name: capitalflow-mfe-auth
+    type: web
+    runtime: docker
+    plan: free
+    branch: master
+    autoDeployTrigger: commit
+    healthCheckPath: /healthz
+    dockerfilePath: deploy/docker/mfe-auth.Dockerfile
+    dockerContext: .
+    buildFilter:
+      paths:
+        - apps/mfe-auth/**/*
+        - projects/core/**/*
+        - library/utils/**/*
+        - deploy/docker/mfe-auth.Dockerfile
+        - deploy/nginx/static.conf
+        - tools/**/*
+        - package.json
+        - package-lock.json
+        - nx.json
+        - tsconfig.json
+        - tsconfig.base.json
+        - eslint.config.mjs
+
+  - name: capitalflow-mfe-payments
+    type: web
+    runtime: docker
+    plan: free
+    branch: master
+    autoDeployTrigger: commit
+    healthCheckPath: /healthz
+    dockerfilePath: deploy/docker/mfe-payments.Dockerfile
+    dockerContext: .
+    buildFilter:
+      paths:
+        - apps/mfe-payments/**/*
+        - projects/core/**/*
+        - library/utils/**/*
+        - deploy/docker/mfe-payments.Dockerfile
+        - deploy/nginx/static.conf
+        - tools/**/*
+        - package.json
+        - package-lock.json
+        - nx.json
+        - tsconfig.json
+        - tsconfig.base.json
+        - eslint.config.mjs
+
+  - name: capitalflow-mfe-treasury
+    type: web
+    runtime: docker
+    plan: free
+    branch: master
+    autoDeployTrigger: commit
+    healthCheckPath: /healthz
+    dockerfilePath: deploy/docker/mfe-treasury.Dockerfile
+    dockerContext: .
+    buildFilter:
+      paths:
+        - apps/mfe-treasury/**/*
+        - projects/core/**/*
+        - library/utils/**/*
+        - deploy/docker/mfe-treasury.Dockerfile
+        - deploy/nginx/static.conf
+        - tools/**/*
+        - package.json
+        - package-lock.json
+        - nx.json
+        - tsconfig.json
+        - tsconfig.base.json
+        - eslint.config.mjs
+
+  - name: capitalflow-mfe-compliance
+    type: web
+    runtime: docker
+    plan: free
+    branch: master
+    autoDeployTrigger: commit
+    healthCheckPath: /healthz
+    dockerfilePath: deploy/docker/mfe-compliance.Dockerfile
+    dockerContext: .
+    buildFilter:
+      paths:
+        - apps/mfe-compliance/**/*
+        - projects/core/**/*
+        - library/utils/**/*
+        - deploy/docker/mfe-compliance.Dockerfile
+        - deploy/nginx/static.conf
+        - tools/**/*
+        - package.json
+        - package-lock.json
+        - nx.json
+        - tsconfig.json
+        - tsconfig.base.json
+        - eslint.config.mjs
+
+  - name: capitalflow-mfe-onboarding
+    type: web
+    runtime: docker
+    plan: free
+    branch: master
+    autoDeployTrigger: commit
+    healthCheckPath: /healthz
+    dockerfilePath: deploy/docker/mfe-onboarding.Dockerfile
+    dockerContext: .
+    buildFilter:
+      paths:
+        - apps/mfe-onboarding/**/*
+        - projects/core/**/*
+        - library/utils/**/*
+        - deploy/docker/mfe-onboarding.Dockerfile
+        - deploy/nginx/static.conf
+        - tools/**/*
+        - package.json
+        - package-lock.json
+        - nx.json
+        - tsconfig.json
+        - tsconfig.base.json
+        - eslint.config.mjs
+
+  - name: capitalflow-mfe-admin
+    type: web
+    runtime: docker
+    plan: free
+    branch: master
+    autoDeployTrigger: commit
+    healthCheckPath: /healthz
+    dockerfilePath: deploy/docker/mfe-admin.Dockerfile
+    dockerContext: .
+    buildFilter:
+      paths:
+        - apps/mfe-admin/**/*
+        - projects/core/**/*
+        - library/utils/**/*
+        - deploy/docker/mfe-admin.Dockerfile
+        - deploy/nginx/static.conf
+        - tools/**/*
+        - package.json
+        - package-lock.json
+        - nx.json
+        - tsconfig.json
+        - tsconfig.base.json
+        - eslint.config.mjs
+
+  - name: capitalflow-mfe-analytics
+    type: web
+    runtime: docker
+    plan: free
+    branch: master
+    autoDeployTrigger: commit
+    healthCheckPath: /healthz
+    dockerfilePath: deploy/docker/mfe-analytics.Dockerfile
+    dockerContext: .
+    buildFilter:
+      paths:
+        - apps/mfe-analytics/**/*
+        - projects/core/**/*
+        - library/utils/**/*
+        - deploy/docker/mfe-analytics.Dockerfile
+        - deploy/nginx/static.conf
+        - tools/**/*
+        - package.json
+        - package-lock.json
+        - nx.json
+        - tsconfig.json
+        - tsconfig.base.json
+        - eslint.config.mjs
+
+  - name: capitalflow-docs
+    type: web
+    runtime: docker
+    plan: free
+    branch: master
+    autoDeployTrigger: commit
+    healthCheckPath: /healthz
+    dockerfilePath: deploy/docker/docs.Dockerfile
+    dockerContext: .
+    buildFilter:
+      paths:
+        - projects/docs/**/*
+        - projects/core/**/*
+        - deploy/docker/docs.Dockerfile
+        - deploy/nginx/spa.conf
+        - tools/**/*
+        - package.json
+        - package-lock.json
+        - nx.json
+        - tsconfig.json
+        - tsconfig.base.json
+        - eslint.config.mjs
