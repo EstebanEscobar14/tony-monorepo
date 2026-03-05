@@ -1,0 +1,169 @@
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: var(--ton-background);
+  --color-foreground: var(--ton-foreground);
+  --color-primary: var(--ton-primary);
+  --color-primary-foreground: var(--ton-primary-foreground);
+  --color-secondary: var(--ton-secondary);
+  --color-secondary-foreground: var(--ton-secondary-foreground);
+  --color-muted: var(--ton-muted);
+  --color-muted-foreground: var(--ton-muted-foreground);
+  --color-accent: var(--ton-accent);
+  --color-accent-foreground: var(--ton-accent-foreground);
+  --color-destructive: var(--ton-destructive);
+  --color-destructive-foreground: var(--ton-destructive-foreground);
+  --color-card: var(--ton-card);
+  --color-card-foreground: var(--ton-card-foreground);
+  --color-popover: var(--ton-popover);
+  --color-popover-foreground: var(--ton-popover-foreground);
+  --color-border: var(--ton-border);
+  --color-input: var(--ton-input);
+  --color-ring: var(--ton-ring);
+  --radius-sm: var(--ton-radius);
+}
+
+:root {
+  --ton-background: #ffffff;
+  --ton-foreground: #0a0a0a;
+  --ton-primary: #171717;
+  --ton-primary-foreground: #fafafa;
+  --ton-secondary: #f5f5f5;
+  --ton-secondary-foreground: #171717;
+  --ton-muted: #f5f5f5;
+  --ton-muted-foreground: #737373;
+  --ton-accent: #f5f5f5;
+  --ton-accent-foreground: #171717;
+  --ton-destructive: #ef4444;
+  --ton-destructive-foreground: #fafafa;
+  --ton-card: #ffffff;
+  --ton-card-foreground: #0a0a0a;
+  --ton-popover: #ffffff;
+  --ton-popover-foreground: #0a0a0a;
+  --ton-border: #e5e5e5;
+  --ton-input: #e5e5e5;
+  --ton-ring: #0a0a0a;
+  --ton-radius: 0.5rem;
+}
+
+.dark,
+[data-theme="dark"] {
+  --ton-background: #0a0a0a;
+  --ton-foreground: #fafafa;
+  --ton-primary: #fafafa;
+  --ton-primary-foreground: #171717;
+  --ton-secondary: #262626;
+  --ton-secondary-foreground: #fafafa;
+  --ton-muted: #262626;
+  --ton-muted-foreground: #a3a3a3;
+  --ton-accent: #262626;
+  --ton-accent-foreground: #fafafa;
+  --ton-destructive: #dc2626;
+  --ton-destructive-foreground: #fafafa;
+  --ton-card: #0a0a0a;
+  --ton-card-foreground: #fafafa;
+  --ton-popover: #171717;
+  --ton-popover-foreground: #fafafa;
+  --ton-border: #262626;
+  --ton-input: #262626;
+  --ton-ring: #d4d4d4;
+}
+
+[data-theme="corporate"] {
+  --ton-background: #f8fafc;
+  --ton-foreground: #0f172a;
+  --ton-primary: #1e40af;
+  --ton-primary-foreground: #ffffff;
+  --ton-secondary: #e2e8f0;
+  --ton-secondary-foreground: #1e293b;
+  --ton-muted: #f1f5f9;
+  --ton-muted-foreground: #64748b;
+  --ton-accent: #dbeafe;
+  --ton-accent-foreground: #1e3a8a;
+  --ton-destructive: #dc2626;
+  --ton-destructive-foreground: #ffffff;
+  --ton-card: #ffffff;
+  --ton-card-foreground: #0f172a;
+  --ton-popover: #ffffff;
+  --ton-popover-foreground: #0f172a;
+  --ton-border: #cbd5e1;
+  --ton-input: #cbd5e1;
+  --ton-ring: #3b82f6;
+  --ton-radius: 0.375rem;
+}
+
+/* ─── Custom scrollbar ─── */
+
+.ton-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ton-muted-foreground) transparent;
+}
+
+.ton-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.ton-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ton-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--ton-muted-foreground);
+  border-radius: 9999px;
+}
+
+.ton-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--ton-foreground);
+}
+
+/* ─── Dialog / Sheet overlay ─── */
+
+.ton-dialog-backdrop {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.ton-dialog-panel {
+  position: relative;
+  background-color: var(--ton-background);
+  border: 1px solid var(--ton-border);
+  border-radius: 0.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Sheet panel — styling only; positioning handled by CDK GlobalPositionStrategy */
+.ton-sheet-panel {
+  background-color: var(--ton-background);
+  padding: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.ton-sheet-right {
+  border-left: 1px solid var(--ton-border);
+}
+
+.ton-sheet-left {
+  border-right: 1px solid var(--ton-border);
+}
+
+.ton-sheet-top {
+  border-bottom: 1px solid var(--ton-border);
+}
+
+.ton-sheet-bottom {
+  border-top: 1px solid var(--ton-border);
+}
+
+/* Search dialog panel */
+.ton-search-dialog {
+  background-color: var(--ton-background);
+  border: 1px solid var(--ton-border);
+  border-radius: 0.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
