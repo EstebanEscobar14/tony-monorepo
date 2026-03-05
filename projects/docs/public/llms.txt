@@ -1,0 +1,396 @@
+# @tony-ui/core
+
+> Angular 21 component library with Tailwind CSS v4 and Signals. Inspired by shadcn/ui.
+
+- Package: @tony-ui/core
+- Angular: >= 21.0.0
+- Styling: Tailwind CSS v4 with CSS custom properties (--ton-* prefix)
+- Reactivity: Angular Signals (input(), model(), output(), computed(), signal(), linkedSignal())
+- Change Detection: Zoneless (provideZonelessChangeDetection())
+- Forms: ControlValueAccessor on all form components
+- Themes: light, dark, corporate (runtime switching via ThemeService)
+- Documentation: https://coci-dev.github.io/tony-ui/
+- GitHub: https://github.com/coci-dev/tony-ui
+
+## Installation
+
+```bash
+ng add @tony-ui/core
+```
+
+Or manually:
+
+```bash
+npm install @tony-ui/core
+```
+
+```typescript
+// app.config.ts
+import { provideZonelessChangeDetection } from '@angular/core';
+import { provideTonyUI } from '@tony-ui/core';
+
+export const appConfig = {
+  providers: [
+    provideZonelessChangeDetection(),
+    provideTonyUI({ defaultTheme: 'light' }),
+  ],
+};
+```
+
+```css
+/* styles.css */
+@import "tailwindcss";
+@import "@tony-ui/core/styles/sonny-theme.css";
+```
+
+## Components (60+)
+
+### Button
+- Selector: `button[tonBtn], a[tonBtn]`
+- Import: `import { TonButtonDirective } from '@tony-ui/core';`
+- Inputs: variant ('default'|'destructive'|'outline'|'secondary'|'ghost'|'link'), size ('sm'|'md'|'lg'|'icon'), disabled, loading, class
+- Example: `<button tonBtn variant="outline" size="sm">Click</button>`
+
+### Card
+- Selectors: `[tonCard]`, `[tonCardHeader]`, `[tonCardTitle]`, `[tonCardDescription]`, `[tonCardContent]`, `[tonCardFooter]`
+- Import: `import { TonCardDirective, TonCardHeaderDirective, TonCardTitleDirective, TonCardDescriptionDirective, TonCardContentDirective, TonCardFooterDirective } from '@tony-ui/core';`
+- Inputs: variant ('default'|'outline'|'ghost'), padding ('none'|'sm'|'md'|'lg')
+- Example: `<div tonCard padding="md"><div tonCardHeader><h3 tonCardTitle>Title</h3></div></div>`
+
+### Input
+- Selector: `input[tonInput], textarea[tonInput]`
+- Import: `import { TonInputDirective } from '@tony-ui/core';`
+- Inputs: variant ('default'|'error'|'success'), inputSize ('sm'|'md'|'lg')
+- Example: `<input tonInput placeholder="Email" />`
+
+### Textarea
+- Selector: `textarea[tonTextarea]`
+- Import: `import { TonTextareaDirective } from '@tony-ui/core';`
+- Inputs: variant, textareaSize, resize, autoResize
+
+### Badge
+- Selector: `[tonBadge]`
+- Import: `import { TonBadgeDirective } from '@tony-ui/core';`
+- Inputs: variant ('default'|'secondary'|'destructive'|'outline'|'success'|'warning'), size ('sm'|'md'|'lg')
+- Example: `<span tonBadge variant="success">Active</span>`
+
+### Avatar
+- Selector: `ton-avatar`
+- Import: `import { TonAvatarComponent } from '@tony-ui/core';`
+- Inputs: src, alt, fallback, size, variant
+
+### Avatar Group
+- Selector: `ton-avatar-group`
+- Import: `import { TonAvatarGroupComponent, type AvatarGroupItem } from '@tony-ui/core';`
+- Inputs: items (required, AvatarGroupItem[]), max (default 3), size ('sm'|'md'|'lg'), spacing ('tight'|'normal')
+- Example: `<ton-avatar-group [items]="users" [max]="3" />`
+
+### Accordion
+- Selectors: `[tonAccordion]`, `[tonAccordionItem]`, `[tonAccordionTrigger]`, `[tonAccordionContent]`
+- Import: `import { TonAccordionDirective, TonAccordionItemDirective, TonAccordionTriggerDirective, TonAccordionContentDirective } from '@tony-ui/core';`
+- Inputs: multi (boolean)
+
+### Alert
+- Selectors: `[tonAlert]`, `[tonAlertTitle]`, `[tonAlertDescription]`
+- Import: `import { TonAlertDirective, TonAlertTitleDirective, TonAlertDescriptionDirective } from '@tony-ui/core';`
+- Inputs: variant ('default'|'destructive'|'success'|'warning'|'info'), dismissible
+
+### Select
+- Selector: `ton-select`
+- Import: `import { TonSelectComponent, type SelectOption } from '@tony-ui/core';`
+- Inputs: options (SelectOption[]), value (model, string), placeholder, disabled, size
+- CVA: Yes
+- Example: `<ton-select [options]="opts" [(value)]="selected" />`
+
+### Combobox
+- Selector: `ton-combobox`
+- Import: `import { TonComboboxComponent, type ComboboxOption } from '@tony-ui/core';`
+- Inputs: options (ComboboxOption[]), value (model, string), placeholder, searchPlaceholder, disabled, size
+- CVA: Yes
+
+### Calendar
+- Selector: `ton-calendar`
+- Import: `import { TonCalendarComponent, type DateRange, type CalendarMode } from '@tony-ui/core';`
+- Inputs: value (model, Date|null), mode ('single'|'range'), rangeValue (model, DateRange|null), min, max, locale, showNavigation, initialViewDate, borderless
+- CVA: Yes
+
+### Date Picker
+- Selector: `ton-date-picker`
+- Import: `import { TonDatePickerComponent } from '@tony-ui/core';`
+- Inputs: value (model, Date|null), placeholder, size, locale, dateFormat (Intl.DateTimeFormatOptions), min, max, clearable, disabled
+- CVA: Yes
+- Example: `<ton-date-picker [(value)]="date" [clearable]="true" />`
+
+### Date Range Picker
+- Selector: `ton-date-range-picker`
+- Import: `import { TonDateRangePickerComponent, type DateRange, type DatePickerPreset } from '@tony-ui/core';`
+- Inputs: value (model, DateRange|null), placeholder, size, locale, dateFormat, separator, dualCalendar, presets (DatePickerPreset[]), min, max, clearable, disabled
+- CVA: Yes
+- Example: `<ton-date-range-picker [(value)]="range" [dualCalendar]="true" [presets]="presets" />`
+
+### Color Picker
+- Selector: `ton-color-picker`
+- Import: `import { TonColorPickerComponent, type ColorPickerPreset, type ColorFormat } from '@tony-ui/core';`
+- Inputs: value (model, string '#hex'), format ('hex'|'rgb'|'hsl'), presets (ColorPickerPreset[]), showInput, showEyeDropper, showFavorites, inline, disabled, placeholder, size
+- Outputs: colorChange, formatChange
+- CVA: Yes
+- Example: `<ton-color-picker [(value)]="color" [presets]="presets" [showFavorites]="true" />`
+
+### Number Input
+- Selector: `ton-number-input`
+- Import: `import { TonNumberInputComponent } from '@tony-ui/core';`
+- Inputs: value (model, number), min, max, step, disabled, size, placeholder
+- CVA: Yes
+- Example: `<ton-number-input [(value)]="count" [min]="0" [max]="100" [step]="5" />`
+
+### OTP Input
+- Selector: `ton-otp-input`
+- Import: `import { TonOtpInputComponent } from '@tony-ui/core';`
+- Inputs: value (model, string), length (default 6), type ('number'|'alphanumeric'), size, disabled, mask, autoFocus, placeholder, separator (number|null), status ('idle'|'loading'|'success'|'error')
+- Outputs: completed (string)
+- CVA: Yes
+- Example: `<ton-otp-input [(value)]="otp" [length]="6" [separator]="3" (completed)="verify($event)" />`
+
+### Tag Input
+- Selector: `ton-tag-input`
+- Import: `import { TonTagInputComponent } from '@tony-ui/core';`
+- Inputs: value (model, string[]), placeholder, maxTags, allowDuplicates, removable, addOnBlur, separators (string[]), validate ((tag)=>boolean), disabled, size
+- Outputs: tagAdded, tagRemoved
+- CVA: Yes (string[])
+- Example: `<ton-tag-input [(value)]="tags" [maxTags]="5" />`
+
+### Data Table
+- Selector: `ton-data-table`
+- Import: `import { TonDataTableComponent, TonCellDefDirective, TonBulkActionsDefDirective, TonRowExpandDefDirective, type DataTableColumn } from '@tony-ui/core';`
+- Inputs: columns (required, DataTableColumn[]), data (required, Record[]), variant, density, hoverable, stickyHeader, selectable, paginated, filterable, showExport, showColumnToggle, expandable, loading, loadingRows, paginationConfig, trackBy, noDataText
+- Models: selectedRows (Record[])
+- Outputs: sortChanged, rowClicked, dataExported
+- Template directives: tonCell (custom cells), tonHeaderCell (custom headers), tonBulkActions (bulk toolbar), tonRowExpand (expandable rows)
+- tonCell context: `let-value` = cell value ($implicit), `let-row="row"` = full row object. Example: `<ng-template tonCell="status" let-value let-row="row"><span>{{ value }} for {{ row['name'] }}</span></ng-template>`
+
+### Table
+- Selectors: `table[tonTable]`, `thead[tonTableHeader]`, `tbody[tonTableBody]`, `tr[tonTableRow]`, `th[tonTableHead]`, `td[tonTableCell]`, `tfoot[tonTableFooter]`, `caption[tonTableCaption]`
+- Import: `import { TonTableDirective, TonTableHeaderDirective, TonTableBodyDirective, TonTableRowDirective, TonTableHeadDirective, TonTableCellDirective } from '@tony-ui/core';`
+- Inputs: variant ('default'|'striped'|'bordered'), density ('compact'|'normal'|'comfortable'), hoverable, stickyHeader
+
+### Checkbox
+- Selector: `input[type="checkbox"][tonCheckbox]`
+- Import: `import { TonCheckboxDirective } from '@tony-ui/core';`
+- Inputs: size
+
+### Radio
+- Selector: `input[type="radio"][tonRadio]`
+- Import: `import { TonRadioDirective } from '@tony-ui/core';`
+- Inputs: size
+
+### Switch
+- Selector: `ton-switch`
+- Import: `import { TonSwitchComponent } from '@tony-ui/core';`
+- Inputs: checked (model), disabled, size
+- CVA: Yes
+
+### Slider
+- Selector: `ton-slider`
+- Import: `import { TonSliderComponent } from '@tony-ui/core';`
+- Inputs: value (model), min, max, step, disabled, size
+- CVA: Yes
+
+### Toggle
+- Selector: `button[tonToggle]`
+- Import: `import { TonToggleDirective } from '@tony-ui/core';`
+- Inputs: variant, size, pressed (model)
+- CVA: Yes
+
+### Rating
+- Selector: `ton-rating`
+- Import: `import { TonRatingComponent } from '@tony-ui/core';`
+- Inputs: value (model), max, readonly, size, half
+- CVA: Yes
+
+### File Input
+- Selector: `ton-file-input`
+- Import: `import { TonFileInputComponent } from '@tony-ui/core';`
+- Inputs: accept, multiple, disabled, placeholder, variant, size, maxSize, value (model)
+- Outputs: fileChange, error
+- CVA: Yes
+
+### Pagination
+- Selector: `ton-pagination`
+- Import: `import { TonPaginationComponent } from '@tony-ui/core';`
+- Inputs: currentPage (model), totalPages (required), siblingCount, boundaryCount, size, variant
+
+### Progress
+- Selector: `ton-progress`
+- Import: `import { TonProgressComponent } from '@tony-ui/core';`
+- Inputs: value, max, variant, size, indeterminate, label
+
+### Radial Progress
+- Selector: `ton-radial-progress`
+- Import: `import { TonRadialProgressComponent } from '@tony-ui/core';`
+- Inputs: value, size, thickness, variant
+
+### Loader
+- Selector: `ton-loader`
+- Import: `import { TonLoaderComponent } from '@tony-ui/core';`
+- Inputs: variant ('spinner'|'dots'|'bars'), size
+
+### Skeleton
+- Selector: `[tonSkeleton]`
+- Import: `import { TonSkeletonDirective } from '@tony-ui/core';`
+- Inputs: variant ('line'|'circular'|'rounded'), size
+
+### Tooltip
+- Selector: `[tonTooltip]`
+- Import: `import { TonTooltipDirective } from '@tony-ui/core';`
+- Inputs: tonTooltip (required, string), tooltipPosition, tooltipDelay, tooltipDisabled
+- Example: `<button tonTooltip="Save changes">Save</button>`
+
+### Popover
+- Selectors: `[tonPopover]`, `[tonPopoverTrigger]`, `[tonPopoverContent]`
+- Import: `import { TonPopoverDirective, TonPopoverTriggerDirective, TonPopoverContentDirective } from '@tony-ui/core';`
+- Inputs: matchWidth, offset, closeOnOutside, closeOnEscape
+- ExportAs: tonPopover (for template ref)
+- Example: `<div tonPopover #pop="tonPopover"><button tonPopoverTrigger>Open</button><div tonPopoverContent class="p-4">Content</div></div>`
+
+### Dropdown Menu
+- Selectors: `[tonDropdown]`, `[tonDropdownTrigger]`, `[tonDropdownContent]`, `[tonMenuItem]`, `[tonMenuSeparator]`, `[tonMenuLabel]`
+- Import: `import { TonDropdownDirective, TonDropdownTriggerDirective, TonDropdownContentDirective, TonMenuItemDirective } from '@tony-ui/core';`
+
+### Command Palette
+- Service: `TonCommandPaletteService`
+- Import: `import { TonCommandPaletteService, type Command } from '@tony-ui/core';`
+- Usage: `this.commandPalette.open({ commands: [...], placeholder: 'Type a command...' })`
+- Command interface: { id, label, action, description?, icon?, group?, keywords?, shortcut?, disabled? }
+
+### Modal / Dialog
+- Service: `TonDialogService`
+- Import: `import { TonDialogService } from '@tony-ui/core';`
+- Usage: `this.dialogService.open(MyComponent, { width: '28rem', data: {...} })`
+- Directives: tonDialogHeader, tonDialogTitle, tonDialogDescription, tonDialogContent, tonDialogFooter, tonDialogClose
+
+### Sheet
+- Import: `import { TonSheetHeaderDirective, TonSheetTitleDirective, TonSheetContentDirective, TonSheetCloseDirective } from '@tony-ui/core';`
+- Opened via TonDialogService with sheet panel class
+
+### Toast
+- Service: `TonToastService`
+- Import: `import { TonToastService } from '@tony-ui/core';`
+- Selector: `ton-toaster` (place in root template)
+- Usage: `this.toastService.success('Title', 'Description')`
+- Methods: success, error, warning, info
+- Inputs: position, maxToasts
+
+### Alert
+- Selector: `[tonAlert]`
+- Import: `import { TonAlertDirective, TonAlertTitleDirective, TonAlertDescriptionDirective } from '@tony-ui/core';`
+- Inputs: variant ('default'|'destructive'|'success'|'warning'|'info'), dismissible
+
+### Tabs
+- Selectors: `[tonTabs]`, `[tonTabsList]`, `[tonTabsTrigger]`, `[tonTabsContent]`
+- Import: `import { TonTabsDirective, TonTabsListDirective, TonTabsTriggerDirective, TonTabsContentDirective } from '@tony-ui/core';`
+- Inputs: value (model, string)
+
+### Accordion
+- Selectors: `[tonAccordion]`, `[tonAccordionItem]`, `[tonAccordionTrigger]`, `[tonAccordionContent]`
+- Inputs: multi (boolean)
+
+### Steps
+- Selectors: `[tonSteps]`, `[tonStep]`
+- Inputs: orientation, size (steps); status ('default'|'active'|'complete'|'error'), icon (step)
+
+### Timeline
+- Selectors: `[tonTimeline]`, `[tonTimelineItem]`, `[tonTimelineStart]`, `[tonTimelineMiddle]`, `[tonTimelineEnd]`
+- Inputs: orientation (timeline); connect (item); variant (middle)
+
+### Breadcrumb
+- Selectors: `nav[tonBreadcrumb]`, `ol[tonBreadcrumbList]`, `li[tonBreadcrumbItem]`, `[tonBreadcrumbLink]`, `[tonBreadcrumbSeparator]`, `[tonBreadcrumbPage]`
+
+### Navbar
+- Selectors: `[tonNavbar]`, `[tonNavbarBrand]`, `[tonNavbarContent]`, `[tonNavbarEnd]`
+- Inputs: variant ('default'|'bordered'|'floating'), sticky
+
+### Divider
+- Selector: `ton-divider`
+- Inputs: orientation, variant, label
+
+### Stat
+- Selectors: `[tonStat]`, `[tonStatTitle]`, `[tonStatValue]`, `[tonStatDescription]`, `[tonStatFigure]`
+
+### Status
+- Selector: `[tonStatus]`
+- Inputs: variant, size, pulse
+
+### Indicator
+- Selectors: `[tonIndicator]`, `[tonIndicatorBadge]`
+- Inputs: position, variant, ariaLabel
+
+### Kbd
+- Selector: `kbd[tonKbd]`
+- Inputs: size
+
+### Link
+- Selector: `a[tonLink]`
+- Inputs: variant
+
+### List
+- Selectors: `[tonList]`, `[tonListItem]`, `[tonListItemIcon]`, `[tonListItemContent]`, `[tonListItemAction]`
+
+### Carousel
+- Selectors: `[tonCarousel]`, `[tonCarouselContent]`, `[tonCarouselItem]`, `[tonCarouselPrev]`, `[tonCarouselNext]`
+- Inputs: orientation, loop, autoplay
+
+### Chat Bubble
+- Selectors: `[tonChatBubble]`, `[tonChatBubbleAvatar]`, `[tonChatBubbleHeader]`, `[tonChatBubbleContent]`, `[tonChatBubbleBody]`, `[tonChatBubbleFooter]`
+- Inputs: align ('start'|'end')
+
+### Dock
+- Selectors: `[tonDock]`, `[tonDockItem]`
+- Inputs: position, class (dock); active (item)
+
+### Drawer
+- Selectors: `[tonDrawerLayout]`, `[tonDrawerContent]`, `[tonDrawerSide]`
+- Import: `import { TonDrawerLayoutComponent, TonDrawerContentDirective, TonDrawerSideDirective } from '@tony-ui/core';`
+- TonDrawerLayoutComponent: exportAs `tonDrawerLayout`, methods: open(), close(), toggle(), isOpen signal (read-only, not two-way bindable)
+- Inputs: overlay (boolean, default true), side ('left'|'right')
+- Usage: `<div tonDrawerLayout #drawer="tonDrawerLayout">` then `drawer.toggle()` to control
+
+### FAB
+- Selectors: `[tonFab]`, `[tonFabTrigger]`, `[tonFabAction]`
+- Inputs: position, direction
+
+### Fieldset
+- Selectors: `fieldset[tonFieldset]`, `legend[tonFieldsetLegend]`, `[tonFieldsetContent]`
+- Inputs: variant, disabled
+
+### Diff
+- Selector: `ton-diff`
+- Inputs: value (model), orientation
+
+### Validator
+- Selectors: `[tonValidator]`, `[tonValidatorHint]`
+- Inputs: control, state (validator); when, type, variant (hint)
+
+### Button Group
+- Selector: `[tonButtonGroup]`
+- Inputs: orientation
+
+## Theming
+
+Three built-in themes: light (default), dark, corporate.
+
+```typescript
+import { ThemeService } from '@tony-ui/core';
+themeService = inject(ThemeService);
+themeService.setTheme('dark');
+```
+
+CSS custom properties: --ton-background, --ton-foreground, --ton-primary, --ton-primary-foreground, --ton-secondary, --ton-secondary-foreground, --ton-accent, --ton-accent-foreground, --ton-muted, --ton-muted-foreground, --ton-destructive, --ton-destructive-foreground, --ton-border, --ton-ring, --ton-radius
+
+## Key Patterns
+
+- All components use `input()` signal API (no @Input decorators)
+- Two-way binding uses `model()` with `[(value)]="signal"` syntax
+- Form components implement ControlValueAccessor for `[formControl]` / `formControlName`
+- Styling uses CVA (class-variance-authority) + `cn()` utility (clsx + tailwind-merge)
+- All components are standalone
+- All components use ChangeDetectionStrategy.OnPush
