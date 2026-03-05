@@ -1,0 +1,55 @@
+<section class="page">
+  <header>
+    <p class="eyebrow">mfe-auth</p>
+    <h2>Acceso y proteccion de rutas</h2>
+    <p>Remote Angular que inicializa una sesion local y habilita los dominios protegidos del shell.</p>
+  </header>
+
+  <div class="layout">
+    <article tonCard>
+      <div tonCardHeader>
+        <h3 tonCardTitle>Login</h3>
+        <p tonCardDescription>Usa cualquier usuario y selecciona el rol que quieres simular.</p>
+      </div>
+
+      <form tonCardContent class="form" [formGroup]="loginForm" (ngSubmit)="submit()">
+        <label tonLabel for="username">Usuario</label>
+        <input id="username" tonInput type="text" formControlName="username" />
+
+        <label tonLabel for="password">Password</label>
+        <input id="password" tonInput type="password" formControlName="password" />
+
+        <label tonLabel for="role">Rol</label>
+        <ton-select id="role" formControlName="role" [options]="roleOptions" placeholder="Selecciona rol" />
+
+        <div class="actions">
+          <button tonBtn type="submit">Entrar</button>
+          <button tonBtn variant="outline" type="button" (click)="logout()">Cerrar sesion</button>
+        </div>
+      </form>
+    </article>
+
+    <article tonCard>
+      <div tonCardHeader>
+        <h3 tonCardTitle>Estado actual</h3>
+        <p tonCardDescription>El shell escucha este estado para mostrar navegacion y aplicar guards.</p>
+      </div>
+
+      <div tonCardContent class="session-panel">
+        @if (session(); as activeSession) {
+          <span tonBadge>{{ currentRoleLabel() }}</span>
+          <strong>{{ activeSession.displayName }}</strong>
+          <p>{{ activeSession.username }}</p>
+          <p>Permisos: {{ activeSession.permissions.join(', ') }}</p>
+        } @else {
+          <div tonAlert variant="info">
+            <h4 tonAlertTitle>Sin sesion activa</h4>
+            <p tonAlertDescription>Abre una sesion para navegar a compliance, onboarding o admin.</p>
+          </div>
+        }
+
+        <p class="feedback">{{ statusMessage() }}</p>
+      </div>
+    </article>
+  </div>
+</section>

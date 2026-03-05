@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@import "../../../projects/core/src/styles/sonny-theme.css";
+
+@source "../../../projects/core/src/lib";
+@source "./app";
+
+body {
+  margin: 0;
+  font-family: Inter, "Segoe UI", sans-serif;
+  background: var(--ton-background);
+  color: var(--ton-foreground);
+}

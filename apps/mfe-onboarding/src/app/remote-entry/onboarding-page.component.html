@@ -1,0 +1,121 @@
+<section class="page">
+  <header>
+    <p class="eyebrow">mfe-onboarding</p>
+    <h2>Altas con formulario basico y pipeline inicial</h2>
+    <p>Remote preparado para evolucionar a wizard simple, reutilizando inputs y validaciones compartidas.</p>
+  </header>
+
+  <div class="layout">
+    <article tonCard>
+      <div tonCardHeader>
+        <h3 tonCardTitle>Nueva alta</h3>
+        <p tonCardDescription>Captura minima del proceso de onboarding.</p>
+      </div>
+
+      <form tonCardContent class="form" [formGroup]="onboardingForm" (ngSubmit)="createRequest()">
+        <div class="field">
+          <label tonLabel for="company">Empresa</label>
+          <input
+            id="company"
+            tonInput
+            type="text"
+            formControlName="company"
+            [attr.aria-invalid]="companyControl.invalid && companyControl.touched"
+            aria-describedby="company-errors"
+          />
+          <div id="company-errors" tonValidator [control]="companyControl">
+            @if (companyControl.touched && companyControl.hasError('required')) {
+              <p tonValidatorHint>La empresa es obligatoria.</p>
+            }
+            @if (companyControl.touched && companyControl.hasError('minlength')) {
+              <p tonValidatorHint>La empresa debe tener al menos 3 caracteres.</p>
+            }
+          </div>
+        </div>
+
+        <div class="field">
+          <label tonLabel for="contact">Contacto</label>
+          <input
+            id="contact"
+            tonInput
+            type="text"
+            formControlName="contact"
+            [attr.aria-invalid]="contactControl.invalid && contactControl.touched"
+            aria-describedby="contact-errors"
+          />
+          <div id="contact-errors" tonValidator [control]="contactControl">
+            @if (contactControl.touched && contactControl.hasError('required')) {
+              <p tonValidatorHint>El contacto es obligatorio.</p>
+            }
+            @if (contactControl.touched && contactControl.hasError('minlength')) {
+              <p tonValidatorHint>El contacto debe tener al menos 3 caracteres.</p>
+            }
+          </div>
+        </div>
+
+        <div class="field">
+          <label tonLabel for="region">Region</label>
+          <input
+            id="region"
+            tonInput
+            type="text"
+            formControlName="region"
+            [attr.aria-invalid]="regionControl.invalid && regionControl.touched"
+            aria-describedby="region-errors"
+          />
+          <div id="region-errors" tonValidator [control]="regionControl">
+            @if (regionControl.touched && regionControl.hasError('required')) {
+              <p tonValidatorHint>La region es obligatoria.</p>
+            }
+          </div>
+        </div>
+
+        <div class="field">
+          <label tonLabel for="notes">Notas</label>
+          <textarea
+            id="notes"
+            tonTextarea
+            rows="4"
+            formControlName="notes"
+            [attr.aria-invalid]="notesControl.invalid && notesControl.touched"
+            aria-describedby="notes-errors"
+          ></textarea>
+          <div id="notes-errors" tonValidator [control]="notesControl">
+            @if (notesControl.touched && notesControl.hasError('required')) {
+              <p tonValidatorHint>Las notas son obligatorias.</p>
+            }
+            @if (notesControl.touched && notesControl.hasError('minlength')) {
+              <p tonValidatorHint>Las notas deben tener al menos 10 caracteres.</p>
+            }
+          </div>
+        </div>
+
+        <div class="actions">
+          <button tonBtn type="submit">Crear alta</button>
+        </div>
+      </form>
+
+      <p class="feedback">{{ feedback() }}</p>
+    </article>
+
+    <article tonCard>
+      <div tonCardHeader>
+        <h3 tonCardTitle>Solicitudes</h3>
+        <p tonCardDescription>Backlog operativo</p>
+      </div>
+
+      <div tonCardContent tonList variant="bordered" class="request-list">
+        @for (item of requests(); track item.id) {
+          <div tonListItem class="request-item">
+            <div tonListItemContent>
+              <strong>{{ item.company }}</strong>
+              <p>{{ item.id }} · {{ item.contact }} · {{ item.region }}</p>
+              <p>Paso actual: {{ item.step }} · {{ formatDate(item.submittedAt) }}</p>
+            </div>
+            <span tonListItemAction tonBadge [variant]="badgeVariant(item.status)">{{ item.status }}</span>
+          </div>
+        }
+      </div>
+    </article>
+  </div>
+</section>

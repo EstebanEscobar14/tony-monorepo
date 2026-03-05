@@ -1,0 +1,149 @@
+{
+  "name": "mfeOnboarding",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/mfe-onboarding/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:webpack-browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/mfe-onboarding",
+        "index": "apps/mfe-onboarding/src/index.html",
+        "main": "apps/mfe-onboarding/src/main.ts",
+        "tsConfig": "apps/mfe-onboarding/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/mfe-onboarding/public"
+          }
+        ],
+        "styles": [
+          "apps/mfe-onboarding/src/styles.css"
+        ],
+        "customWebpackConfig": {
+          "path": "apps/mfe-onboarding/webpack.config.ts"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "outputHashing": "all",
+          "customWebpackConfig": {
+            "path": "apps/mfe-onboarding/webpack.prod.config.ts"
+          }
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test-build": {
+      "executor": "@angular/build:application",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/test-mfe-onboarding",
+        "index": "apps/mfe-onboarding/src/index.html",
+        "browser": "apps/mfe-onboarding/src/main.ts",
+        "tsConfig": "apps/mfe-onboarding/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/mfe-onboarding/public"
+          }
+        ],
+        "styles": [
+          "apps/mfe-onboarding/src/styles.css"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@nx/angular:dev-server",
+      "options": {
+        "port": 4206,
+        "publicHost": "http://localhost:4206"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "mfeOnboarding:build:production"
+        },
+        "development": {
+          "buildTarget": "mfeOnboarding:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "mfeOnboarding:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@angular/build:unit-test",
+      "options": {
+        "buildTarget": "mfeOnboarding:test-build",
+        "tsConfig": "apps/mfe-onboarding/tsconfig.spec.json",
+        "runner": "vitest",
+        "include": ["**/*.spec.ts"],
+        "watch": false
+      }
+    },
+    "serve-static": {
+      "continuous": true,
+      "executor": "@nx/web:file-server",
+      "defaultConfiguration": "production",
+      "options": {
+        "buildTarget": "mfeOnboarding:build",
+        "port": 4206,
+        "watch": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "mfeOnboarding:build:development"
+        },
+        "production": {
+          "buildTarget": "mfeOnboarding:build:production"
+        }
+      }
+    }
+  }
+}

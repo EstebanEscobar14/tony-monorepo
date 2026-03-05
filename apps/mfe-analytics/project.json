@@ -1,0 +1,44 @@
+{
+  "name": "mfe-analytics",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/mfe-analytics/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/mfe-analytics"],
+      "options": {
+        "cwd": ".",
+        "command": "webpack --config apps/mfe-analytics/webpack.config.js --mode production"
+      },
+      "configurations": {
+        "development": {
+          "command": "webpack --config apps/mfe-analytics/webpack.config.js --mode development"
+        },
+        "production": {
+          "command": "webpack --config apps/mfe-analytics/webpack.config.js --mode production"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": ".",
+        "command": "webpack serve --config apps/mfe-analytics/webpack.config.js --mode development --port 4203"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": ".",
+        "command": "vitest run --config apps/mfe-analytics/vitest.config.ts"
+      }
+    }
+  }
+}
