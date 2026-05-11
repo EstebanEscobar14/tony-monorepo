@@ -8,7 +8,6 @@ This repository now has a `.gitlab-ci.yml` prepared for GitLab CI/CD.
 - Builds the shared library, the shell, docs, and each microfrontend in separate jobs.
 - Uses path-based rules so not every build job runs on every change.
 - Packages the `dist/` output into a release artifact.
-- Builds Docker images selectively for the deployable apps that changed.
 - Leaves manual deployment jobs for `staging` and `production`.
 - Leaves manual smoke checks against `/healthz` after each deployment.
 
@@ -17,11 +16,8 @@ This matches the exam intent better than a single monolithic pipeline because ea
 ## What happens when you change only one area
 
 - If you change only one microfrontend, only that microfrontend build job should run, plus the common validation jobs.
-- If you change only one microfrontend, its Docker image job should run as well.
 - If you change `projects/core`, multiple build jobs should run because that shared UI library is consumed by shell, docs, and several microfrontends.
-- If you change `projects/core`, the Docker jobs for the affected deployable apps should also run.
 - If you change `library/utils`, multiple build jobs should also run because it is imported by shell and multiple microfrontends.
-- If you change `library/utils`, the Docker jobs for the dependent shell and microfrontends should also run.
 - `lint` and `test` still run as shared validation gates for the whole branch.
 
 This is a good talking point for the exam: the pipeline is no longer one monolithic release path, but shared foundations still correctly fan out to dependent modules.
@@ -36,28 +32,13 @@ git push -u gitlab mono-repo
 
 2. Open the project in GitLab and confirm that a runner is available.
 
-The pipeline uses container images such as `node:22-bookworm`, `debian:bookworm-slim`, and `curlimages/curl:8.12.1`, so the runner must support Docker-based jobs.
+The pipeline uses standard container images such as `node:22-bookworm`, `debian:bookworm-slim`, and `curlimages/curl:8.12.1`.
 
 3. If you only want CI for now, you can stop here.
 
 The `lint`, `test`, `build`, and `package_release` jobs should already appear without any extra GitLab configuration.
 
-4. To run the Docker jobs, the GitLab runner must support Docker-in-Docker.
-
-That usually means:
-
-- Docker executor enabled
-- privileged mode enabled for the runner
-
-Without that capability, the Docker stage will fail even if the rest of the pipeline is correct.
-
-5. To publish Docker images into the GitLab registry, create this CI/CD variable:
-
-- `PUBLISH_DOCKER_IMAGES=true`
-
-If you leave it unset, the Docker jobs will still build the images, but they will not push them anywhere.
-
-6. To enable deployments, create these CI/CD variables in `Settings > CI/CD > Variables`:
+4. To enable deployments, create these CI/CD variables in `Settings > CI/CD > Variables`:
 
 - `DEPLOY_SSH_HOST`
 - `DEPLOY_SSH_PORT`
@@ -71,7 +52,7 @@ If you leave it unset, the Docker jobs will still build the images, but they wil
 
 Recommended: mark the private key as protected and masked.
 
-7. Prepare the remote server paths used by the jobs.
+5. Prepare the remote server paths used by the jobs.
 
 Each deploy job expects a directory structure like this on the target server:
 
@@ -83,7 +64,7 @@ Each deploy job expects a directory structure like this on the target server:
 
 The job uploads `release-<sha>.tgz`, extracts it into `releases/<sha>`, and atomically switches the `current` symlink.
 
-8. Point your web server to the `current` symlink.
+6. Point your web server to the `current` symlink.
 
 For example, if `STAGING_DEPLOY_PATH` is `/var/www/capitalflow/staging`, your web server should serve:
 
@@ -93,14 +74,14 @@ For example, if `STAGING_DEPLOY_PATH` is `/var/www/capitalflow/staging`, your we
 
 That gives you an auditable release history and a near-zero-downtime switch for static assets.
 
-9. After each manual deploy, run the matching smoke job.
+7. After each manual deploy, run the matching smoke job.
 
 The pipeline exposes:
 
 - `smoke_staging`
 - `smoke_production`
 
-10. Make sure `/healthz` is reachable on each environment URL.
+8. Make sure `/healthz` is reachable on each environment URL.
 
 The smoke jobs call:
 
@@ -116,7 +97,6 @@ You can justify this setup like this:
 - The old bottleneck was one monolithic pipeline for all teams.
 - The new CI splits validation and build by module, reducing cross-team blocking.
 - Every pipeline produces auditable artifacts.
-- Every deployable can also be packaged as a Docker image inside the pipeline.
 - Deployment is automated and repeatable instead of SSHing manually and running scripts by hand.
 - Staging can be validated with a smoke check before production promotion.
 - The production release is promoted manually after validation, which is a reasonable control for regulated clients.
