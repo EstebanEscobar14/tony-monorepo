@@ -1,0 +1,31 @@
+.analytics-shell {
+  display: grid;
+  gap: 1rem;
+  min-height: calc(100vh - 12rem);
+}
+
+.copy {
+  max-width: 60ch;
+}
+
+.eyebrow {
+  margin: 0 0 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  color: var(--ton-primary);
+}
+
+h2 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.analytics-element {
+  display: block;
+  width: 100%;
+  min-height: 75vh;
+  border: 1px solid var(--ton-border);
+  border-radius: 0.5rem;
+  background: var(--ton-background);
+}

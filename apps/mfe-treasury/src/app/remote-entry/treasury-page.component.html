@@ -1,0 +1,37 @@
+<section class="page">
+  <header>
+    <p class="eyebrow">mfe-treasury</p>
+    <h2>Cash positioning de alto volumen</h2>
+    <p>
+      Este remote demuestra lazy loading, deferrable views y virtual scrolling para
+      {{ rowCount }} registros desde la libreria compartida.
+    </p>
+  </header>
+
+  @defer (on viewport) {
+    <div class="load-status" aria-live="polite">
+      <span>{{ loadedRows() }} / {{ rowCount }} registros preparados</span>
+      @if (loadingRows()) {
+        <span tonBadge variant="outline">carga progresiva activa</span>
+      } @else {
+        <span tonBadge variant="secondary">dataset completo listo</span>
+      }
+    </div>
+
+    <ton-data-table
+      [columns]="columns"
+      [data]="rows()"
+      [trackBy]="'id'"
+      [paginated]="false"
+      [filterable]="false"
+      [showColumnToggle]="true"
+      [virtualScroll]="true"
+      [virtualItemSize]="virtualItemSize"
+      virtualViewportHeight="560px"
+    ></ton-data-table>
+  } @placeholder {
+    <div class="deferred-placeholder">Preparando tabla de alto volumen...</div>
+  } @loading (minimum 300ms) {
+    <div class="deferred-placeholder">Cargando tabla virtualizada...</div>
+  }
+</section>

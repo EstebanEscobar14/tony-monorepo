@@ -1,0 +1,26 @@
+<section class="analytics-shell">
+  <div class="copy">
+    <p class="eyebrow">React remote</p>
+    <h2>Analytics integrado en la ruta del shell</h2>
+    <p>
+      El dashboard de React se muestra dentro del shell manteniendo su ejecucion aislada para no
+      interferir con los componentes Angular del resto de microfrontends.
+    </p>
+  </div>
+
+  @if (loadFailed()) {
+    <div tonAlert variant="destructive">
+      <h3 tonAlertTitle>No se pudo cargar el dashboard remoto</h3>
+      <p tonAlertDescription>Revisa que el remote React este disponible en el puerto esperado.</p>
+    </div>
+  } @else if (!ready()) {
+    <div tonAlert variant="info">
+      <h3 tonAlertTitle>Cargando dashboard remoto</h3>
+      <p tonAlertDescription>El shell esta resolviendo el custom element de Analytics.</p>
+    </div>
+  }
+
+  @if (ready()) {
+    <mfe-analytics-root class="analytics-element" />
+  }
+</section>
