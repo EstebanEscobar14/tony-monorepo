@@ -7,6 +7,7 @@ import {
   getRoleLabel,
   readAuthSession,
 } from '@tony-ui/utils';
+import { environment } from '../environments/environment';
 
 @Component({
   imports: [RouterOutlet, RouterLink, RouterLinkActive, TonBadgeDirective, TonButtonDirective],
@@ -17,6 +18,7 @@ import {
 export class App implements OnInit, OnDestroy {
   readonly themeService = inject(ThemeService);
   readonly session = signal(readAuthSession());
+  readonly docsUrl = environment.docsUrl;
   readonly roleLabel = computed(() => {
     const session = this.session();
     return session ? getRoleLabel(session.role) : 'Invitado';

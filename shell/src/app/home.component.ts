@@ -8,6 +8,7 @@ import {
   TonCardHeaderDirective,
   TonCardTitleDirective,
 } from '@tony-ui/core';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -23,4 +24,6 @@ import {
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {}
+export class HomeComponent {
+  readonly docsUrl = environment.docsUrl;
+}

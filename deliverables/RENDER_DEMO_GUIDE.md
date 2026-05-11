@@ -80,6 +80,7 @@ In the `capitalflow-shell` service, go to `Environment` and set:
 - `MFE_ONBOARDING_URL=https://<onboarding-service>.onrender.com`
 - `MFE_ADMIN_URL=https://<admin-service>.onrender.com`
 - `ANALYTICS_ELEMENT_URL=https://<analytics-service>.onrender.com/analytics-element.js`
+- `DOCS_URL=https://<docs-service>.onrender.com`
 
 Then choose `Save, rebuild, and deploy`.
 

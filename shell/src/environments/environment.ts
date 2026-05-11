@@ -3,4 +3,5 @@ export const environment = {
   remotes: {
     analyticsElementUrl: 'http://localhost:4203/analytics-element.js',
   },
+  docsUrl: 'http://localhost:4301',
 };

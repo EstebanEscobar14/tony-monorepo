@@ -23,6 +23,8 @@ services:
         value: https://replace-with-mfe-admin-url.onrender.com
       - key: ANALYTICS_ELEMENT_URL
         value: https://replace-with-mfe-analytics-url.onrender.com/analytics-element.js
+      - key: DOCS_URL
+        value: https://capitalflow-docs.onrender.com
     buildFilter:
       paths:
         - shell/**/*
