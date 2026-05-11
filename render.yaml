@@ -3,7 +3,7 @@ services:
     type: web
     runtime: docker
     plan: free
-    branch: mono-repo
+    branch: master
     autoDeployTrigger: commit
     healthCheckPath: /healthz
     dockerfilePath: deploy/docker/shell.Dockerfile
@@ -44,7 +44,7 @@ services:
     type: web
     runtime: docker
     plan: free
-    branch: mono-repo
+    branch: master
     autoDeployTrigger: commit
     healthCheckPath: /healthz
     dockerfilePath: deploy/docker/mfe-auth.Dockerfile
@@ -68,7 +68,7 @@ services:
     type: web
     runtime: docker
     plan: free
-    branch: mono-repo
+    branch: master
     autoDeployTrigger: commit
     healthCheckPath: /healthz
     dockerfilePath: deploy/docker/mfe-payments.Dockerfile
@@ -92,7 +92,7 @@ services:
     type: web
     runtime: docker
     plan: free
-    branch: mono-repo
+    branch: master
     autoDeployTrigger: commit
     healthCheckPath: /healthz
     dockerfilePath: deploy/docker/mfe-treasury.Dockerfile
@@ -116,7 +116,7 @@ services:
     type: web
     runtime: docker
     plan: free
-    branch: mono-repo
+    branch: master
     autoDeployTrigger: commit
     healthCheckPath: /healthz
     dockerfilePath: deploy/docker/mfe-compliance.Dockerfile
@@ -140,7 +140,7 @@ services:
     type: web
     runtime: docker
     plan: free
-    branch: mono-repo
+    branch: master
     autoDeployTrigger: commit
     healthCheckPath: /healthz
     dockerfilePath: deploy/docker/mfe-onboarding.Dockerfile
@@ -164,7 +164,7 @@ services:
     type: web
     runtime: docker
     plan: free
-    branch: mono-repo
+    branch: master
     autoDeployTrigger: commit
     healthCheckPath: /healthz
     dockerfilePath: deploy/docker/mfe-admin.Dockerfile
@@ -188,7 +188,7 @@ services:
     type: web
     runtime: docker
     plan: free
-    branch: mono-repo
+    branch: master
     autoDeployTrigger: commit
     healthCheckPath: /healthz
     dockerfilePath: deploy/docker/mfe-analytics.Dockerfile
@@ -212,7 +212,7 @@ services:
     type: web
     runtime: docker
     plan: free
-    branch: mono-repo
+    branch: master
     autoDeployTrigger: commit
     healthCheckPath: /healthz
     dockerfilePath: deploy/docker/docs.Dockerfile

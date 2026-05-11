@@ -39,7 +39,7 @@ For the exam, this is acceptable as a demonstration environment.
 1. In Render, click `New +`.
 2. Choose `Blueprint`.
 3. Connect your GitLab repository.
-4. Select the branch `mono-repo`.
+4. Select the branch `master`.
 5. Render will detect `render.yaml`.
 6. Review the services and create them.
 
@@ -52,7 +52,7 @@ For each service:
 1. Click `New +`.
 2. Choose `Web Service`.
 3. Connect the same GitLab repository.
-4. Select branch `mono-repo`.
+4. Select branch `master`.
 5. Choose `Docker`.
 6. Set the corresponding Dockerfile:
    - `deploy/docker/shell.Dockerfile`
