@@ -1,0 +1,28 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "core",
+  "projectType": "library",
+  "sourceRoot": "projects/core/src",
+  "prefix": "ton",
+  "targets": {
+    "build": {
+      "executor": "@angular/build:ng-packagr",
+      "outputs": ["{workspaceRoot}/dist/core"],
+      "options": {
+        "project": "projects/core/ng-package.json",
+        "tsConfig": "projects/core/tsconfig.lib.prod.json"
+      }
+    },
+    "test": {
+      "executor": "@angular/build:unit-test",
+      "options": {
+        "buildTarget": "core:build",
+        "tsConfig": "projects/core/tsconfig.spec.json",
+        "runner": "vitest",
+        "include": ["**/*.spec.ts"],
+        "watch": false
+      }
+    }
+  },
+  "tags": ["scope:shared", "type:ui"]
+}

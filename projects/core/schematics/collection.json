@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "ng-add": {
+      "description": "Add TonyUI to a project",
+      "factory": "./ng-add/index#ngAdd",
+      "schema": "./ng-add/schema.json"
+    },
+    "component": {
+      "description": "Copy a TonyUI component source to your project (shadcn-style)",
+      "factory": "./ng-generate/component/index#generateComponent",
+      "schema": "./ng-generate/component/schema.json",
+      "aliases": ["c"]
+    }
+  }
+}

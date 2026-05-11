@@ -1,0 +1,43 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "preserve",
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@tony-ui/core": [
+        "./projects/core/src/public-api.ts"
+      ],
+      "@tony-ui/core/*": [
+        "./projects/core/src/*"
+      ],
+      "@tony-ui/utils": [
+        "./library/utils/src/index.ts"
+      ],
+      "@tony-ui/utils/*": [
+        "./library/utils/src/*"
+      ],
+      "mfePayments/Routes": [
+        "apps/mfe-payments/src/app/remote-entry/entry.routes.ts"
+      ],
+      "mfeAuth/Routes": [
+        "apps/mfe-auth/src/app/remote-entry/entry.routes.ts"
+      ],
+      "mfeCompliance/Routes": [
+        "apps/mfe-compliance/src/app/remote-entry/entry.routes.ts"
+      ],
+      "mfeOnboarding/Routes": [
+        "apps/mfe-onboarding/src/app/remote-entry/entry.routes.ts"
+      ],
+      "mfeAdmin/Routes": [
+        "apps/mfe-admin/src/app/remote-entry/entry.routes.ts"
+      ],
+      "mfeTreasury/Routes": [
+        "apps/mfe-treasury/src/app/remote-entry/entry.routes.ts"
+      ]
+    }
+  }
+}

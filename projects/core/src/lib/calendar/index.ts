@@ -1,0 +1,7 @@
+export { TonCalendarComponent } from './calendar.component';
+export type {
+  DateRange,
+  CalendarDay,
+  CalendarMode,
+  DatePickerPreset,
+} from './calendar.types';
