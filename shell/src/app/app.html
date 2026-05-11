@@ -1,0 +1,64 @@
+<div class="shell-layout">
+  <header class="shell-header">
+    <div class="header-top">
+      <a class="brand" routerLink="/" aria-label="Ir a inicio">
+        <span class="brand-mark">CF</span>
+        <span>
+          <span class="eyebrow">CapitalFlow demo</span>
+          <strong>Angular Expert Workspace</strong>
+        </span>
+      </a>
+
+      <div class="header-actions" aria-label="Acciones de workspace">
+        @if (session(); as activeSession) {
+          <span tonBadge>{{ roleLabel() }} - {{ activeSession.displayName }}</span>
+          <button tonBtn variant="outline" size="sm" type="button" (click)="logout()">Logout</button>
+        } @else {
+          <span tonBadge variant="outline">Invitado</span>
+        }
+        <button tonBtn variant="ghost" size="sm" type="button" (click)="toggleTheme()">
+          @if (themeService.isDark()) {
+            Tema claro
+          } @else {
+            Tema oscuro
+          }
+        </button>
+        <a tonBtn variant="outline" size="sm" href="http://localhost:4301" target="_blank" rel="noreferrer">
+          Docs UI
+        </a>
+      </div>
+    </div>
+
+    <nav class="shell-nav" aria-label="Navegacion principal">
+      <div class="nav-cluster">
+        <span class="nav-label">Core</span>
+        <div class="nav-links">
+          <a tonBtn size="sm" variant="ghost" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
+          <a tonBtn size="sm" variant="ghost" routerLink="/auth" routerLinkActive="active">Auth</a>
+        </div>
+      </div>
+
+      <div class="nav-cluster">
+        <span class="nav-label">Operaciones</span>
+        <div class="nav-links">
+          <a tonBtn size="sm" variant="ghost" routerLink="/payments" routerLinkActive="active">Payments</a>
+          <a tonBtn size="sm" variant="ghost" routerLink="/treasury" routerLinkActive="active">Treasury</a>
+          <a tonBtn size="sm" variant="ghost" routerLink="/analytics" routerLinkActive="active">Analytics</a>
+        </div>
+      </div>
+
+      <div class="nav-cluster">
+        <span class="nav-label">Gobierno</span>
+        <div class="nav-links">
+          <a tonBtn size="sm" variant="ghost" routerLink="/compliance" routerLinkActive="active">Compliance</a>
+          <a tonBtn size="sm" variant="ghost" routerLink="/onboarding" routerLinkActive="active">Onboarding</a>
+          <a tonBtn size="sm" variant="ghost" routerLink="/admin" routerLinkActive="active">Admin</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="shell-main">
+    <router-outlet />
+  </main>
+</div>
