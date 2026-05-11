@@ -26,8 +26,8 @@ import { LIB_VERSION, NPM_URL } from '../shared/version';
             </button>
           }
           <a [routerLink]="i18n.localizeLink('/')" class="flex items-center gap-2 text-lg font-bold tracking-tight shrink-0">
-            <img src="logo-nav.png" alt="TonyUI" class="h-8 w-auto" />
-            <span class="hidden sm:inline">TonyUI</span>
+            <img src="brand-mark.svg" alt="Escobar UI" class="h-8 w-auto" />
+            <span class="hidden sm:inline">Escobar UI</span>
           </a>
           <a [href]="npmUrl" target="_blank" rel="noopener" class="text-[10px] font-medium tracking-wider rounded-sm bg-yellow-500/10 text-yellow-600 border border-yellow-500/20 px-1.5 py-0.5 hover:bg-yellow-500/20 transition-colors no-underline shrink-0">v{{ version }}</a>
         </div>

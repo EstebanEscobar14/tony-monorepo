@@ -26,13 +26,13 @@ type TreasuryViewRow = {
 })
 export class TreasuryPageComponent {
   readonly columns = [
-    { key: 'account', label: 'Account' },
-    { key: 'region', label: 'Region' },
-    { key: 'owner', label: 'Owner' },
-    { key: 'balance', label: 'Balance' },
-    { key: 'available', label: 'Available' },
-    { key: 'change', label: 'Change' },
-    { key: 'risk', label: 'Risk' },
+    { key: 'account', label: 'Account', width: '14rem' },
+    { key: 'region', label: 'Region', width: '8rem' },
+    { key: 'owner', label: 'Owner', width: '10rem' },
+    { key: 'balance', label: 'Balance', width: '10rem' },
+    { key: 'available', label: 'Available', width: '10rem' },
+    { key: 'change', label: 'Change', width: '7rem' },
+    { key: 'risk', label: 'Risk', width: '6rem' },
   ];
   readonly rowCount = 80000;
   readonly virtualItemSize = 52;

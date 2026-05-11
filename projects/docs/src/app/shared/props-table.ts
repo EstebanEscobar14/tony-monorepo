@@ -13,7 +13,7 @@ export interface PropDef {
   standalone: true,
   template: `
     <div class="overflow-x-auto rounded-lg border border-border">
-      <table class="w-full text-sm">
+      <table class="w-full min-w-[42rem] text-sm">
         <thead class="bg-muted/50">
           <tr>
             <th class="px-4 py-3 text-left font-medium">{{ headers().prop }}</th>

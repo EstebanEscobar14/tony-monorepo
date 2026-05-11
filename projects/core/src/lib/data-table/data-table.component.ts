@@ -150,7 +150,8 @@ const DEFAULT_LABELS: Required<DataTableLabels> = {
     }
 
     @if (virtualScroll()) {
-      <div class="border border-border rounded-sm overflow-hidden">
+      <div class="overflow-x-auto border border-border rounded-sm">
+        <div class="min-w-[48rem] sm:min-w-[56rem]">
         <div
           class="grid border-b border-border bg-muted/40 text-sm font-medium"
           [style.grid-template-columns]="gridTemplateColumns()"
@@ -186,7 +187,7 @@ const DEFAULT_LABELS: Required<DataTableLabels> = {
         <cdk-virtual-scroll-viewport
           [itemSize]="virtualItemSize()"
           [style.height]="virtualViewportHeight()"
-          class="block w-full"
+          class="block w-full min-w-full"
         >
           @let cellDefs = cellDefMap();
           @let cols = visibleColumns();
@@ -211,11 +212,13 @@ const DEFAULT_LABELS: Required<DataTableLabels> = {
             }
           </div>
         </cdk-virtual-scroll-viewport>
+        </div>
       </div>
     } @else {
-    <div class="overflow-auto border border-border rounded-sm">
+    <div class="overflow-x-auto border border-border rounded-sm">
       <table
         tonTable
+        class="w-full min-w-[48rem] sm:min-w-[56rem]"
         [variant]="variant()"
         [density]="density()"
         [hoverable]="hoverable()"

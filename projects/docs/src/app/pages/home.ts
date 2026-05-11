@@ -32,7 +32,7 @@ import { HOME_ES } from '../i18n/es/home';
     <!-- Hero Section -->
     <section class="relative overflow-hidden border-b border-border bg-gradient-to-b from-primary/5 via-background to-background">
       <div class="mx-auto max-w-6xl px-6 py-24 text-center sm:py-32 lg:py-40">
-        <img src="logo-hero.png" alt="TonyUI Logo" class="mx-auto h-24 sm:h-32 w-auto mb-8" />
+        <img src="brand-mark.svg" alt="Escobar UI Logo" class="mx-auto h-24 sm:h-32 w-auto mb-8" />
         <h1 class="text-5xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl">
           <span class="bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">{{ t().hero.title }}</span>
         </h1>

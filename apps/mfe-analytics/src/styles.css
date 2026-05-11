@@ -17,7 +17,7 @@ body {
 .analytics-page {
   display: grid;
   gap: 1.25rem;
-  padding: 1.5rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
 }
 
 .analytics-header {
@@ -107,6 +107,7 @@ body {
 
 .analytics-table {
   width: 100%;
+  min-width: 34rem;
   border-collapse: collapse;
 }
 
@@ -161,5 +162,16 @@ body {
 
   .metric-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .panel {
+    padding: 1rem;
+  }
+
+  .analytics-table th,
+  .analytics-table td {
+    padding: 0.75rem 0.85rem;
   }
 }
