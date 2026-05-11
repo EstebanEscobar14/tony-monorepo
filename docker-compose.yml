@@ -1,0 +1,71 @@
+services:
+  shell:
+    build:
+      context: .
+      dockerfile: deploy/docker/shell.Dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - mfe-auth
+      - mfe-payments
+      - mfe-treasury
+      - mfe-analytics
+      - mfe-compliance
+      - mfe-onboarding
+      - mfe-admin
+
+  mfe-auth:
+    build:
+      context: .
+      dockerfile: deploy/docker/mfe-auth.Dockerfile
+    ports:
+      - "4204:80"
+
+  mfe-payments:
+    build:
+      context: .
+      dockerfile: deploy/docker/mfe-payments.Dockerfile
+    ports:
+      - "4201:80"
+
+  mfe-treasury:
+    build:
+      context: .
+      dockerfile: deploy/docker/mfe-treasury.Dockerfile
+    ports:
+      - "4202:80"
+
+  mfe-analytics:
+    build:
+      context: .
+      dockerfile: deploy/docker/mfe-analytics.Dockerfile
+    ports:
+      - "4203:80"
+
+  mfe-compliance:
+    build:
+      context: .
+      dockerfile: deploy/docker/mfe-compliance.Dockerfile
+    ports:
+      - "4205:80"
+
+  mfe-onboarding:
+    build:
+      context: .
+      dockerfile: deploy/docker/mfe-onboarding.Dockerfile
+    ports:
+      - "4206:80"
+
+  mfe-admin:
+    build:
+      context: .
+      dockerfile: deploy/docker/mfe-admin.Dockerfile
+    ports:
+      - "4207:80"
+
+  docs:
+    build:
+      context: .
+      dockerfile: deploy/docker/docs.Dockerfile
+    ports:
+      - "4301:80"

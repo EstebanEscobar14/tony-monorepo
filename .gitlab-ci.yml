@@ -1,0 +1,433 @@
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH
+    - if: $CI_COMMIT_TAG
+
+stages:
+  - validate
+  - build
+  - package
+  - deploy
+  - verify
+
+default:
+  image: node:22-bookworm
+  interruptible: true
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - .npm/
+      - .nx/cache/
+  before_script:
+    - npm ci --cache .npm --prefer-offline
+
+variables:
+  CI: "true"
+  GIT_DEPTH: "50"
+  NX_DAEMON: "false"
+  NPM_CONFIG_CACHE: ".npm"
+
+.shell_related_changes: &shell_related_changes
+  - shell/**/*
+  - projects/core/**/*
+  - library/utils/**/*
+  - .gitlab-ci.yml
+  - package.json
+  - package-lock.json
+  - nx.json
+  - tsconfig.json
+  - tsconfig.base.json
+  - eslint.config.mjs
+  - .prettierrc
+  - .prettierignore
+  - tools/**/*
+  - deploy/**/*
+
+.docs_related_changes: &docs_related_changes
+  - projects/docs/**/*
+  - projects/core/**/*
+  - .gitlab-ci.yml
+  - package.json
+  - package-lock.json
+  - nx.json
+  - tsconfig.json
+  - tsconfig.base.json
+  - eslint.config.mjs
+  - .prettierrc
+  - .prettierignore
+  - tools/**/*
+  - deploy/**/*
+
+.mfe_auth_changes: &mfe_auth_changes
+  - apps/mfe-auth/**/*
+  - projects/core/**/*
+  - library/utils/**/*
+  - .gitlab-ci.yml
+  - package.json
+  - package-lock.json
+  - nx.json
+  - tsconfig.json
+  - tsconfig.base.json
+  - eslint.config.mjs
+  - .prettierrc
+  - .prettierignore
+  - tools/**/*
+  - deploy/**/*
+
+.mfe_payments_changes: &mfe_payments_changes
+  - apps/mfe-payments/**/*
+  - projects/core/**/*
+  - library/utils/**/*
+  - .gitlab-ci.yml
+  - package.json
+  - package-lock.json
+  - nx.json
+  - tsconfig.json
+  - tsconfig.base.json
+  - eslint.config.mjs
+  - .prettierrc
+  - .prettierignore
+  - tools/**/*
+  - deploy/**/*
+
+.mfe_treasury_changes: &mfe_treasury_changes
+  - apps/mfe-treasury/**/*
+  - projects/core/**/*
+  - library/utils/**/*
+  - .gitlab-ci.yml
+  - package.json
+  - package-lock.json
+  - nx.json
+  - tsconfig.json
+  - tsconfig.base.json
+  - eslint.config.mjs
+  - .prettierrc
+  - .prettierignore
+  - tools/**/*
+  - deploy/**/*
+
+.mfe_compliance_changes: &mfe_compliance_changes
+  - apps/mfe-compliance/**/*
+  - projects/core/**/*
+  - library/utils/**/*
+  - .gitlab-ci.yml
+  - package.json
+  - package-lock.json
+  - nx.json
+  - tsconfig.json
+  - tsconfig.base.json
+  - eslint.config.mjs
+  - .prettierrc
+  - .prettierignore
+  - tools/**/*
+  - deploy/**/*
+
+.mfe_onboarding_changes: &mfe_onboarding_changes
+  - apps/mfe-onboarding/**/*
+  - projects/core/**/*
+  - library/utils/**/*
+  - .gitlab-ci.yml
+  - package.json
+  - package-lock.json
+  - nx.json
+  - tsconfig.json
+  - tsconfig.base.json
+  - eslint.config.mjs
+  - .prettierrc
+  - .prettierignore
+  - tools/**/*
+  - deploy/**/*
+
+.mfe_admin_changes: &mfe_admin_changes
+  - apps/mfe-admin/**/*
+  - projects/core/**/*
+  - library/utils/**/*
+  - .gitlab-ci.yml
+  - package.json
+  - package-lock.json
+  - nx.json
+  - tsconfig.json
+  - tsconfig.base.json
+  - eslint.config.mjs
+  - .prettierrc
+  - .prettierignore
+  - tools/**/*
+  - deploy/**/*
+
+.mfe_analytics_changes: &mfe_analytics_changes
+  - apps/mfe-analytics/**/*
+  - projects/core/**/*
+  - library/utils/**/*
+  - .gitlab-ci.yml
+  - package.json
+  - package-lock.json
+  - nx.json
+  - tsconfig.json
+  - tsconfig.base.json
+  - eslint.config.mjs
+  - .prettierrc
+  - .prettierignore
+  - tools/**/*
+  - deploy/**/*
+
+.build_artifacts: &build_artifacts
+  artifacts:
+    expire_in: 7 days
+    paths:
+      - dist/
+
+lint:
+  stage: validate
+  script:
+    - node tools/run-nx.js run-many --target=lint --projects=shell,mfePayments,mfeTreasury,mfeAuth,mfeCompliance,mfeOnboarding,mfeAdmin,mfe-analytics,docs --parallel=3
+
+test:
+  stage: validate
+  script:
+    - node tools/run-nx.js run-many --target=test --projects=core,shell,mfePayments,mfeTreasury,mfeAuth,mfeCompliance,mfeOnboarding,mfeAdmin,mfe-analytics,docs --parallel=3
+
+build_core_shell_docs:
+  stage: build
+  rules:
+    - changes: *shell_related_changes
+    - changes: *docs_related_changes
+    - if: $CI_COMMIT_TAG
+  script:
+    - node tools/run-nx.js run-many --target=build --projects=core,shell,docs --configuration=production --parallel=3
+  <<: *build_artifacts
+
+build_mfe_auth:
+  stage: build
+  rules:
+    - changes: *mfe_auth_changes
+    - if: $CI_COMMIT_TAG
+  script:
+    - node tools/run-nx.js build mfeAuth --configuration=production
+  <<: *build_artifacts
+
+build_mfe_payments:
+  stage: build
+  rules:
+    - changes: *mfe_payments_changes
+    - if: $CI_COMMIT_TAG
+  script:
+    - node tools/run-nx.js build mfePayments --configuration=production
+  <<: *build_artifacts
+
+build_mfe_treasury:
+  stage: build
+  rules:
+    - changes: *mfe_treasury_changes
+    - if: $CI_COMMIT_TAG
+  script:
+    - node tools/run-nx.js build mfeTreasury --configuration=production
+  <<: *build_artifacts
+
+build_mfe_compliance:
+  stage: build
+  rules:
+    - changes: *mfe_compliance_changes
+    - if: $CI_COMMIT_TAG
+  script:
+    - node tools/run-nx.js build mfeCompliance --configuration=production
+  <<: *build_artifacts
+
+build_mfe_onboarding:
+  stage: build
+  rules:
+    - changes: *mfe_onboarding_changes
+    - if: $CI_COMMIT_TAG
+  script:
+    - node tools/run-nx.js build mfeOnboarding --configuration=production
+  <<: *build_artifacts
+
+build_mfe_admin:
+  stage: build
+  rules:
+    - changes: *mfe_admin_changes
+    - if: $CI_COMMIT_TAG
+  script:
+    - node tools/run-nx.js build mfeAdmin --configuration=production
+  <<: *build_artifacts
+
+build_mfe_analytics:
+  stage: build
+  rules:
+    - changes: *mfe_analytics_changes
+    - if: $CI_COMMIT_TAG
+  script:
+    - node tools/run-nx.js build mfe-analytics --configuration=production
+  <<: *build_artifacts
+
+package_release:
+  stage: package
+  rules:
+    - changes:
+        - shell/**/*
+        - apps/**/*
+        - projects/core/**/*
+        - projects/docs/**/*
+        - library/utils/**/*
+        - .gitlab-ci.yml
+        - package.json
+        - package-lock.json
+        - nx.json
+        - tsconfig.json
+        - tsconfig.base.json
+        - eslint.config.mjs
+        - .prettierrc
+        - .prettierignore
+        - tools/**/*
+        - deploy/**/*
+    - if: $CI_COMMIT_TAG
+  needs:
+    - job: build_core_shell_docs
+      optional: true
+    - job: build_mfe_auth
+      optional: true
+    - job: build_mfe_payments
+      optional: true
+    - job: build_mfe_treasury
+      optional: true
+    - job: build_mfe_compliance
+      optional: true
+    - job: build_mfe_onboarding
+      optional: true
+    - job: build_mfe_admin
+      optional: true
+    - job: build_mfe_analytics
+      optional: true
+  script:
+    - mkdir -p release
+    - tar -czf "release/release-$CI_COMMIT_SHORT_SHA.tgz" dist
+    - find dist -maxdepth 1 -mindepth 1 -type d -printf '%f\n' | sort
+  artifacts:
+    expire_in: 14 days
+    paths:
+      - release/
+      - dist/
+
+deploy_staging:
+  stage: deploy
+  image: debian:bookworm-slim
+  needs:
+    - package_release
+  variables:
+    GIT_STRATEGY: none
+  before_script:
+    - apt-get update
+    - apt-get install -y --no-install-recommends curl openssh-client
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$DEPLOY_SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
+    - chmod 600 ~/.ssh/id_ed25519
+    - |
+      if [ -n "$DEPLOY_SSH_KNOWN_HOSTS" ]; then
+        printf "%s\n" "$DEPLOY_SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+      fi
+  script:
+    - test -n "$DEPLOY_SSH_HOST"
+    - test -n "$DEPLOY_SSH_USER"
+    - test -n "$STAGING_DEPLOY_PATH"
+    - test -f release/release-$CI_COMMIT_SHORT_SHA.tgz
+    - scp -P "${DEPLOY_SSH_PORT:-22}" release/release-$CI_COMMIT_SHORT_SHA.tgz "$DEPLOY_SSH_USER@$DEPLOY_SSH_HOST:/tmp/release-$CI_COMMIT_SHORT_SHA.tgz"
+    - |
+      ssh -p "${DEPLOY_SSH_PORT:-22}" "$DEPLOY_SSH_USER@$DEPLOY_SSH_HOST" "
+      set -eu
+      base='$STAGING_DEPLOY_PATH'
+      release_dir=\"\$base/releases/$CI_COMMIT_SHORT_SHA\"
+      previous_link=\$(readlink \"\$base/current\" 2>/dev/null || true)
+      mkdir -p \"\$base/releases\"
+      rm -rf \"\$release_dir\"
+      mkdir -p \"\$release_dir\"
+      tar -xzf /tmp/release-$CI_COMMIT_SHORT_SHA.tgz -C \"\$release_dir\"
+      ln -sfn \"\$release_dir/dist\" \"\$base/current\"
+      rm -f /tmp/release-$CI_COMMIT_SHORT_SHA.tgz
+      printf '%s' \"\$previous_link\" > \"\$base/.previous_release\"
+      "
+  environment:
+    name: staging
+    url: $STAGING_URL
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $DEPLOY_SSH_HOST && $DEPLOY_SSH_USER && $STAGING_DEPLOY_PATH
+      when: manual
+    - when: never
+
+smoke_staging:
+  stage: verify
+  image: curlimages/curl:8.12.1
+  needs:
+    - deploy_staging
+  script:
+    - test -n "$STAGING_URL"
+    - curl --fail --silent --show-error "$STAGING_URL/healthz"
+  environment:
+    name: staging
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $STAGING_URL
+      when: manual
+    - when: never
+
+deploy_production:
+  stage: deploy
+  image: debian:bookworm-slim
+  needs:
+    - package_release
+  variables:
+    GIT_STRATEGY: none
+  before_script:
+    - apt-get update
+    - apt-get install -y --no-install-recommends curl openssh-client
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$DEPLOY_SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
+    - chmod 600 ~/.ssh/id_ed25519
+    - |
+      if [ -n "$DEPLOY_SSH_KNOWN_HOSTS" ]; then
+        printf "%s\n" "$DEPLOY_SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+      fi
+  script:
+    - test -n "$DEPLOY_SSH_HOST"
+    - test -n "$DEPLOY_SSH_USER"
+    - test -n "$PRODUCTION_DEPLOY_PATH"
+    - test -f release/release-$CI_COMMIT_SHORT_SHA.tgz
+    - scp -P "${DEPLOY_SSH_PORT:-22}" release/release-$CI_COMMIT_SHORT_SHA.tgz "$DEPLOY_SSH_USER@$DEPLOY_SSH_HOST:/tmp/release-$CI_COMMIT_SHORT_SHA.tgz"
+    - |
+      ssh -p "${DEPLOY_SSH_PORT:-22}" "$DEPLOY_SSH_USER@$DEPLOY_SSH_HOST" "
+      set -eu
+      base='$PRODUCTION_DEPLOY_PATH'
+      release_dir=\"\$base/releases/$CI_COMMIT_SHORT_SHA\"
+      previous_link=\$(readlink \"\$base/current\" 2>/dev/null || true)
+      mkdir -p \"\$base/releases\"
+      rm -rf \"\$release_dir\"
+      mkdir -p \"\$release_dir\"
+      tar -xzf /tmp/release-$CI_COMMIT_SHORT_SHA.tgz -C \"\$release_dir\"
+      ln -sfn \"\$release_dir/dist\" \"\$base/current\"
+      rm -f /tmp/release-$CI_COMMIT_SHORT_SHA.tgz
+      printf '%s' \"\$previous_link\" > \"\$base/.previous_release\"
+      "
+  environment:
+    name: production
+    url: $PRODUCTION_URL
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $DEPLOY_SSH_HOST && $DEPLOY_SSH_USER && $PRODUCTION_DEPLOY_PATH
+      when: manual
+    - when: never
+
+smoke_production:
+  stage: verify
+  image: curlimages/curl:8.12.1
+  needs:
+    - deploy_production
+  script:
+    - test -n "$PRODUCTION_URL"
+    - curl --fail --silent --show-error "$PRODUCTION_URL/healthz"
+  environment:
+    name: production
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $PRODUCTION_URL
+      when: manual
+    - when: never

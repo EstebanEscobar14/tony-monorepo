@@ -1,0 +1,48 @@
+GuíadeEstudioAngularExpert
+
+===== PAGE BREAK =====
+
+Índice.Índice.1RecursosdeEstudioporÁreadeConocimiento2ArquitecturadeMicroFrontends2OptimizaciónAvanzadadelRendimiento3IntegraciónconWebComponents4PatronesdeDiseñoAvanzadosyRefactoring5LibreríasdeComponentes6SeguridadAvanzadaenAngular7DockeryDespliegueenlaNube8Página1DocumentodediseñotécnicoV.1.
+
+===== PAGE BREAK =====
+
+RecursosdeEstudioporÁreadeConocimientoArquitecturadeMicroFrontendsDocumentaciónOficialhttps://angular.dev/guide/elementshttps://www.angulararchitects.io/en/blog/https://github.com/angular-architects/module-federation-pluginhttps://nx.dev/technologies/angular/recipes/dynamic-module-federation-with-angularTutorialesenVideo(YouTube)AngularMicroFrontendTutorial🔥|Step-by-StepGuidewithModuleFederationCursosEstructuradoshttps://www.udemy.com/courses/search/?q=angular+micro+frontendsArtículosyBlogsVerificadoshttps://martinfowler.com/articles/micro-frontends.htmlhttps://www.angularminds.com/blog/how-to-build-micro-front-ends-using-module-federation-in-angularhttps://medium.com/@sujithakumars/module-federation-in-angular-a-step-by-step-guide-a257baefa760Página2DocumentodediseñotécnicoV.1.
+
+===== PAGE BREAK =====
+
+https://dev.to/michaeljota/how-to-add-module-federation-into-your-angular-micro-frontend-apps-jmhhttps://developer.okta.com/blog/2022/05/17/angular-microfrontend-authhttps://medium.com/@hamzamakh/building-micro-frontends-in-angular-using-module-federation-f4d64358a701https://module-federation.io/practice/frameworks/angular/angular-mfehttps://sagarsnath.medium.com/angular-micro-frontend-module-federation-5bc5638c963fhttps://www.guschlbauer.dev/building-micro-frontends-with-angular-module-federation/OptimizaciónAvanzadadelRendimientoDocumentaciónOficialhttps://angular.dev/guide/prerenderinghttps://angular.dev/best-practices/runtime-performancehttps://angular.dev/tools/cli/buildhttps://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_APITutorialesenVideoFromGoodtoGreat:OptimizingAngularPerformanceCursosEstructuradoshttps://www.udemy.com/courses/search/?q=angular+performancePágina3DocumentodediseñotécnicoV.1.
+
+===== PAGE BREAK =====
+
+ArtículosyBlogsVerificadoshttps://www.oneclickitsolution.com/centerofexcellence/angular/tree-shakable-angular-services-modules-how-whyhttps://ej2.syncfusion.com/angular/documentation/frameworks-and-feature/tree-shakinghttps://medium.com/@CodeCatalyst/maximizing-angular-performance-with-tree-shaking-examples-and-best-practices-c14a3969b07ahttps://www.santoshyadav.dev/blog/2024-12-20-the-tree-shaking-journey-in-angular-a-deep-dive/https://medium.com/connected-things/angular-tree-shaking-a-comprehensive-guide-05efa40c4604https://stackoverflow.com/questions/60321224/angular-tree-shaking-how-exactly-does-it-workhttps://nintriva.com/blog/optimize-angular-app-performance/https://gili842.medium.com/demystifying-tree-shaking-in-angular-optimizing-your-application-446a35fdb9ebHerramientashttps://webpack.js.org/guides/tree-shaking/https://github.com/GoogleChromeLabs/webpack-libs-optimizationshttps://web.dev/articles/vitalsPágina4DocumentodediseñotécnicoV.1.
+
+===== PAGE BREAK =====
+
+IntegraciónconWebComponentsDocumentaciónOficialhttps://angular.dev/guide/elementshttps://developer.mozilla.org/en-US/docs/Web/API/Web_componentshttps://custom-elements-everywhere.com/TutorialesenVideoAngular&WebComponents-UsingAngularElementstocreateCustomElementsCursosEstructuradoshttps://www.udemy.com/courses/search/?q=angular+elementsArtículosyBlogsVerificadoshttps://buddy.works/tutorials/building-web-components-with-angularhttps://angular.love/angular-web-components-a-complete-guide/https://developer.vonage.com/en/blog/using-web-components-in-an-angular-application-joyful-funhttps://medium.com/cwan-engineering/unleashing-the-power-of-angular-web-components-92367fdd02adhttps://www.angularminds.com/blog/angular-elements-best-practiceshttps://theprateekmishra.com/diving-deep-into-angular-elementshttps://www.telerik.com/blogs/getting-started-with-angular-elementshttps://www.codementor.io/blog/angular-web-components-8e4n0r0zw7Página5DocumentodediseñotécnicoV.1.
+
+===== PAGE BREAK =====
+
+PatronesdeDiseñoAvanzadosyRefactoringDocumentaciónOficialhttps://angular.dev/style-guidehttps://refactoring.guru/design-patterns/typescriptTutorialesenVideoAngularDesignPatterns–Bridge[Advanced,2020]CursosEstructuradoshttps://www.udemy.com/courses/search/?q=angular+design+patternsArtículosyBlogshttps://www.patterns.dev/https://refactoring.guru/refactoringLibrosdeReferenciahttps://refactoring.guru/design-patternshttps://www.oreilly.com/library/view/learning-javascript-design/9781449334840/LibreríasdeComponentesDocumentaciónOficialhttps://angular.dev/tools/libraries/creating-librarieshttps://nx.dev/getting-started/introPágina6DocumentodediseñotécnicoV.1.
+
+===== PAGE BREAK =====
+
+TutorialesenVideoBuildingAngularLibrary:AComprehensiveTutorialforCreatingReusableComponentsCursosEstructuradoshttps://www.udemy.com/courses/search/?q=angular+librariesArtículosyBlogshttps://medium.com/search?q=angular+libraryHerramientashttps://www.npmjs.com/package/ng-packagrhttps://nx.dev/https://www.npmjs.com/SeguridadAvanzadaenAngularDocumentaciónOficialhttps://angular.dev/best-practices/securityhttps://owasp.org/www-project-top-ten/https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.htmlTutorialesenVideoHowtopreventXSS(CrossSiteScripting)attacksin#Angular15CursosEstructuradoshttps://www.udemy.com/courses/search/?q=angular+securityPágina7DocumentodediseñotécnicoV.1.
+
+===== PAGE BREAK =====
+
+ArtículosyBlogsVerificadoshttps://www.stackhawk.com/blog/angular-xss-guide-examples-and-prevention/https://www.invicti.com/blog/web-security/angular-xss-guide/https://www.veracode.com/blog/secure-development/great-escape-avoiding-xss-angular-templateshttps://dev-academy.com/preventing-xss-in-angular/https://omid.dev/2024/06/03/security-best-practices-in-angular-protecting-your-applications/https://pragmaticwebsecurity.com/articles/spasecurity/angular-xss.htmlhttps://developer.okta.com/blog/2022/07/21/angular-security-xsshttps://auth0.com/blog/HerramientasdeTestinghttps://snyk.io/https://github.com/cure53/DOMPurifyDockeryDespliegueenlaNubeDocumentaciónOficialhttps://docs.docker.com/get-started/https://angular.dev/tools/cli/deploymenthttps://docs.aws.amazon.com/amplify/https://learn.microsoft.com/azure/Página8DocumentodediseñotécnicoV.1.
+
+===== PAGE BREAK =====
+
+https://cloud.google.com/docsTutorialesenVideoDockerTutorialforBeginners[FULLCOURSEin3Hours]CursosEstructuradoshttps://www.udemy.com/course/docker-kubernetes-the-practical-guide/https://www.udemy.com/courses/search/?q=dockerArtículosyBlogshttps://medium.com/search?q=angular+dockerHerramientashttps://docs.docker.com/desktop/https://kubernetes.io/docs/home/https://nginx.org/en/docs/Página9DocumentodediseñotécnicoV.1.
+
+===== PAGE BREAK =====
+
+
+
+===== PAGE BREAK =====
+
+
+
+===== PAGE BREAK =====
+
