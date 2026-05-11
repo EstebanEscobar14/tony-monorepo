@@ -1,0 +1,149 @@
+{
+  "name": "mfeAdmin",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/mfe-admin/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:webpack-browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/mfe-admin",
+        "index": "apps/mfe-admin/src/index.html",
+        "main": "apps/mfe-admin/src/main.ts",
+        "tsConfig": "apps/mfe-admin/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/mfe-admin/public"
+          }
+        ],
+        "styles": [
+          "apps/mfe-admin/src/styles.css"
+        ],
+        "customWebpackConfig": {
+          "path": "apps/mfe-admin/webpack.config.ts"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "outputHashing": "all",
+          "customWebpackConfig": {
+            "path": "apps/mfe-admin/webpack.prod.config.ts"
+          }
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test-build": {
+      "executor": "@angular/build:application",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/test-mfe-admin",
+        "index": "apps/mfe-admin/src/index.html",
+        "browser": "apps/mfe-admin/src/main.ts",
+        "tsConfig": "apps/mfe-admin/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/mfe-admin/public"
+          }
+        ],
+        "styles": [
+          "apps/mfe-admin/src/styles.css"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@nx/angular:dev-server",
+      "options": {
+        "port": 4207,
+        "publicHost": "http://localhost:4207"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "mfeAdmin:build:production"
+        },
+        "development": {
+          "buildTarget": "mfeAdmin:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "mfeAdmin:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@angular/build:unit-test",
+      "options": {
+        "buildTarget": "mfeAdmin:test-build",
+        "tsConfig": "apps/mfe-admin/tsconfig.spec.json",
+        "runner": "vitest",
+        "include": ["**/*.spec.ts"],
+        "watch": false
+      }
+    },
+    "serve-static": {
+      "continuous": true,
+      "executor": "@nx/web:file-server",
+      "defaultConfiguration": "production",
+      "options": {
+        "buildTarget": "mfeAdmin:build",
+        "port": 4207,
+        "watch": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "mfeAdmin:build:development"
+        },
+        "production": {
+          "buildTarget": "mfeAdmin:build:production"
+        }
+      }
+    }
+  }
+}

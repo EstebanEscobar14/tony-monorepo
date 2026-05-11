@@ -1,0 +1,44 @@
+<section class="page">
+  <header>
+    <p class="eyebrow">mfe-admin</p>
+    <h2>Dashboard operativo y configuracion base</h2>
+    <p>Vista administrativa ligera para revisar metricas del workspace y ajustes compartidos.</p>
+  </header>
+
+  <div class="metric-grid">
+    @for (metric of metrics; track metric.label) {
+      <article tonCard>
+        <div tonCardHeader>
+          <p tonCardDescription>{{ metric.label }}</p>
+          <h3 tonCardTitle>{{ metric.value }}</h3>
+        </div>
+        <div tonCardContent>{{ metric.helper }}</div>
+      </article>
+    }
+  </div>
+
+  <article tonCard>
+    <div tonCardHeader class="settings-header">
+      <div>
+        <h3 tonCardTitle>Configuracion base</h3>
+        <p tonCardDescription>Parametros preparados para ser conectados a un facade o API.</p>
+      </div>
+      <button tonBtn variant="outline" type="button" (click)="activateDrafts()">Aplicar borradores</button>
+    </div>
+
+    <div tonCardContent tonList variant="bordered" class="settings-list">
+      @for (setting of settings; track setting.key) {
+        <div tonListItem class="setting-item">
+          <div tonListItemContent>
+            <strong>{{ setting.key }}</strong>
+            <p>{{ setting.scope }} · {{ setting.owner }}</p>
+          </div>
+          <div tonListItemAction class="setting-meta">
+            <span tonBadge>{{ setting.status }}</span>
+            <small>{{ formatDate(setting.updatedAt) }}</small>
+          </div>
+        </div>
+      }
+    </div>
+  </article>
+</section>
