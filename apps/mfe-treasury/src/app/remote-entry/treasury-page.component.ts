@@ -1,4 +1,4 @@
-import { afterNextRender, ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { afterNextRender, ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { TonBadgeDirective, TonDataTableComponent } from '@tony-ui/core';
 import { formatCurrency } from '@tony-ui/utils';
 
@@ -39,6 +39,7 @@ export class TreasuryPageComponent {
   readonly rows = signal<TreasuryViewRow[]>([]);
   readonly loadedRows = signal(0);
   readonly loadingRows = signal(true);
+  readonly mobilePreviewRows = computed(() => this.rows().slice(0, 10));
 
   constructor() {
     afterNextRender(() => this.loadRowsProgressively());

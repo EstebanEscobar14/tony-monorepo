@@ -48,7 +48,7 @@ export function AnalyticsDashboard() {
       <div className="panel">
         <h3>Available cash by account</h3>
         <p>Snapshot de disponibilidad por cuenta para la vista consolidada del shell.</p>
-        <div className="table-shell">
+        <div className="table-shell desktop-analytics-table">
           <table className="analytics-table">
             <thead>
               <tr>
@@ -67,6 +67,24 @@ export function AnalyticsDashboard() {
               ))}
             </tbody>
           </table>
+        </div>
+
+        <div className="analytics-mobile-list">
+          {rows.map((row) => (
+            <article key={row.id} className="analytics-mobile-card">
+              <div className="analytics-mobile-card__top">
+                <div>
+                  <span className="analytics-mobile-card__label">Account</span>
+                  <strong>{row.account}</strong>
+                </div>
+                <span className="analytics-mobile-pill">{row.region}</span>
+              </div>
+              <div className="analytics-mobile-card__value">
+                <span className="analytics-mobile-card__label">Available</span>
+                <p>{row.available}</p>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
 

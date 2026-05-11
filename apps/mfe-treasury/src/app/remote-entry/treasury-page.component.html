@@ -18,17 +18,62 @@
       }
     </div>
 
-    <ton-data-table
-      [columns]="columns"
-      [data]="rows()"
-      [trackBy]="'id'"
-      [paginated]="false"
-      [filterable]="false"
-      [showColumnToggle]="true"
-      [virtualScroll]="true"
-      [virtualItemSize]="virtualItemSize"
-      virtualViewportHeight="min(68vh, 35rem)"
-    ></ton-data-table>
+    <div class="desktop-table">
+      <ton-data-table
+        [columns]="columns"
+        [data]="rows()"
+        [trackBy]="'id'"
+        [paginated]="false"
+        [filterable]="false"
+        [showColumnToggle]="true"
+        [virtualScroll]="true"
+        [virtualItemSize]="virtualItemSize"
+        virtualViewportHeight="min(68vh, 35rem)"
+      ></ton-data-table>
+    </div>
+
+    <div class="mobile-cards" aria-label="Vista compacta de tesoreria">
+      @for (row of mobilePreviewRows(); track row.id) {
+        <article class="treasury-card">
+          <div class="treasury-card-top">
+            <div>
+              <p class="card-label">Cuenta</p>
+              <strong>{{ row.account }}</strong>
+            </div>
+            <span tonBadge [variant]="row.risk === 'High' ? 'destructive' : row.risk === 'Medium' ? 'outline' : 'secondary'">
+              {{ row.risk }}
+            </span>
+          </div>
+
+          <dl class="treasury-card-grid">
+            <div>
+              <dt>Region</dt>
+              <dd>{{ row.region }}</dd>
+            </div>
+            <div>
+              <dt>Owner</dt>
+              <dd>{{ row.owner }}</dd>
+            </div>
+            <div>
+              <dt>Balance</dt>
+              <dd>{{ row.balance }}</dd>
+            </div>
+            <div>
+              <dt>Disponible</dt>
+              <dd>{{ row.available }}</dd>
+            </div>
+            <div>
+              <dt>Variacion</dt>
+              <dd>{{ row.change }}</dd>
+            </div>
+          </dl>
+        </article>
+      }
+
+      <p class="mobile-note">
+        Vista movil compacta mostrando una muestra operativa de los registros cargados.
+      </p>
+    </div>
   } @placeholder {
     <div class="deferred-placeholder">Preparando tabla de alto volumen...</div>
   } @loading (minimum 300ms) {
