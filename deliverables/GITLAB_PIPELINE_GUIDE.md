@@ -10,6 +10,7 @@ This repository now has a `.gitlab-ci.yml` prepared for GitLab CI/CD.
 - Packages the `dist/` output into a release artifact.
 - Leaves manual deployment jobs for `staging` and `production`.
 - Leaves manual smoke checks against `/healthz` after each deployment.
+- Includes an optional manual `smoke_e2e` job that runs Playwright against a deployed environment.
 
 This matches the exam intent better than a single monolithic pipeline because each module can fail independently and the release is traceable through artifacts and environments.
 
@@ -49,6 +50,7 @@ The `lint`, `test`, `build`, and `package_release` jobs should already appear wi
 - `PRODUCTION_DEPLOY_PATH`
 - `STAGING_URL`
 - `PRODUCTION_URL`
+- `E2E_BASE_URL` (optional, for the Playwright smoke suite)
 
 Recommended: mark the private key as protected and masked.
 
@@ -80,6 +82,13 @@ The pipeline exposes:
 
 - `smoke_staging`
 - `smoke_production`
+- `smoke_e2e`
+
+`smoke_e2e` runs the Playwright suite in this repository against the URL stored in `E2E_BASE_URL`. For your Render demo, you can set:
+
+```text
+E2E_BASE_URL=https://capitalflow-shell.onrender.com
+```
 
 8. Make sure `/healthz` is reachable on each environment URL.
 
@@ -99,6 +108,7 @@ You can justify this setup like this:
 - Every pipeline produces auditable artifacts.
 - Deployment is automated and repeatable instead of SSHing manually and running scripts by hand.
 - Staging can be validated with a smoke check before production promotion.
+- The deployed shell can also be validated end to end with Playwright, proving that the remotes load correctly in a browser.
 - The production release is promoted manually after validation, which is a reasonable control for regulated clients.
 - The symlink switch provides a practical zero-downtime approach for static microfrontend deployments.
 

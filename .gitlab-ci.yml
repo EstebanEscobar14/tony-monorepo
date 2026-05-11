@@ -431,3 +431,19 @@ smoke_production:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $PRODUCTION_URL
       when: manual
     - when: never
+
+smoke_e2e:
+  stage: verify
+  image: mcr.microsoft.com/playwright:v1.59.1-noble
+  script:
+    - npm run test:e2e
+  artifacts:
+    when: always
+    expire_in: 7 days
+    paths:
+      - playwright-report/
+      - test-results/
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $E2E_BASE_URL
+      when: manual
+    - when: never
