@@ -2,6 +2,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "name": "docs",
   "projectType": "application",
+  "tags": ["scope:shared", "type:app"],
   "generators": {
     "@schematics/angular:component": {
       "skipTests": true

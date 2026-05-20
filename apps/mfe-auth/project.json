@@ -4,7 +4,7 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "apps/mfe-auth/src",
-  "tags": [],
+  "tags": ["scope:domain-auth", "type:app"],
   "targets": {
     "build": {
       "executor": "@nx/angular:webpack-browser",

@@ -4,7 +4,7 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "apps/mfe-payments/src",
-  "tags": [],
+  "tags": ["scope:domain-payments", "type:app"],
   "targets": {
     "build": {
       "executor": "@nx/angular:webpack-browser",

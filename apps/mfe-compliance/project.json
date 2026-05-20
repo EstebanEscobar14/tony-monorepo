@@ -4,7 +4,7 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "apps/mfe-compliance/src",
-  "tags": [],
+  "tags": ["scope:domain-compliance", "type:app"],
   "targets": {
     "build": {
       "executor": "@nx/angular:webpack-browser",

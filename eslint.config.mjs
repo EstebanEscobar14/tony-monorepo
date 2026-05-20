@@ -27,10 +27,70 @@ export default [
                     ],
                     depConstraints: [
                         {
-                            sourceTag: "*",
+                            sourceTag: "scope:shell",
                             onlyDependOnLibsWithTags: [
-                                "*"
+                                "scope:shared",
+                                "scope:domain-auth",
+                                "scope:domain-payments",
+                                "scope:domain-treasury",
+                                "scope:domain-compliance",
+                                "scope:domain-onboarding",
+                                "scope:domain-admin",
+                                "scope:domain-analytics"
                             ]
+                        },
+                        {
+                            sourceTag: "scope:domain-auth",
+                            onlyDependOnLibsWithTags: ["scope:shared"]
+                        },
+                        {
+                            sourceTag: "scope:domain-payments",
+                            onlyDependOnLibsWithTags: ["scope:shared"]
+                        },
+                        {
+                            sourceTag: "scope:domain-treasury",
+                            onlyDependOnLibsWithTags: ["scope:shared"]
+                        },
+                        {
+                            sourceTag: "scope:domain-compliance",
+                            onlyDependOnLibsWithTags: ["scope:shared"]
+                        },
+                        {
+                            sourceTag: "scope:domain-onboarding",
+                            onlyDependOnLibsWithTags: ["scope:shared"]
+                        },
+                        {
+                            sourceTag: "scope:domain-admin",
+                            onlyDependOnLibsWithTags: ["scope:shared"]
+                        },
+                        {
+                            sourceTag: "scope:domain-analytics",
+                            onlyDependOnLibsWithTags: ["scope:shared"]
+                        },
+                        {
+                            sourceTag: "scope:shared",
+                            onlyDependOnLibsWithTags: ["scope:shared"]
+                        },
+                        {
+                            sourceTag: "type:app",
+                            onlyDependOnLibsWithTags: [
+                                "type:app",
+                                "type:ui",
+                                "type:util",
+                                "type:data-access"
+                            ]
+                        },
+                        {
+                            sourceTag: "type:ui",
+                            onlyDependOnLibsWithTags: ["type:ui", "type:util"]
+                        },
+                        {
+                            sourceTag: "type:data-access",
+                            onlyDependOnLibsWithTags: ["type:data-access", "type:util"]
+                        },
+                        {
+                            sourceTag: "type:util",
+                            onlyDependOnLibsWithTags: ["type:util"]
                         }
                     ]
                 }
