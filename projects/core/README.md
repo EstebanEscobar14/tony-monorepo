@@ -175,6 +175,37 @@ CSS custom properties:
 --ton-border, --ton-ring, --ton-radius
 ```
 
+## Public API contract
+
+The supported Angular entry point is `@tony-ui/core`. Consumers should import directives,
+components, providers and public types only from this entry point. Deep imports under
+`src/lib/**` are internal and may change without a migration window.
+
+The supported web-components entry point is `@tony-ui/core/web-components/register`. React or
+plain Web Component consumers should call `registerTonyUiElements()` once during bootstrap and
+share visual tokens through `@tony-ui/core/styles/sonny-theme.css`.
+
+Deprecation policy for the demo monorepo:
+
+- Public exports stay source-compatible during the exam/demo branch unless a replacement is
+  documented here first.
+- Deprecated components keep their selector/directive name for at least one minor demo iteration.
+- Visual tokens are additive by default; renaming a `--ton-*` token requires an alias during the
+  migration window.
+
+## Cross-framework tokens
+
+Angular shell/remotes and the React analytics remote consume the same CSS token file:
+`projects/core/src/styles/sonny-theme.css`.
+
+Shared contract:
+
+- Color tokens use the `--ton-*` namespace and are mapped into Tailwind v4 through `@theme`.
+- Theme activation is class/attribute based: `.dark`, `[data-theme="dark"]` and
+  `[data-theme="corporate"]`.
+- Layout radius is exposed as `--ton-radius`, then mapped to Tailwind radius tokens.
+- Consumers may read tokens from CSS variables, but should not redefine component internals.
+
 ## Links
 
 - [Documentation](https://coci-dev.github.io/tony-ui/)
