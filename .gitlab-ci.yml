@@ -182,11 +182,32 @@ lint:
   stage: validate
   script:
     - node tools/run-nx.js run-many --target=lint --projects=shell,mfePayments,mfeTreasury,mfeAuth,mfeCompliance,mfeOnboarding,mfeAdmin,mfe-analytics,docs --parallel=3
+  artifacts:
+    when: always
+    expire_in: 7 days
+    paths:
+      - .nx/cache/
 
 test:
   stage: validate
   script:
     - node tools/run-nx.js run-many --target=test --projects=core,shell,mfePayments,mfeTreasury,mfeAuth,mfeCompliance,mfeOnboarding,mfeAdmin,mfe-analytics,docs --parallel=3
+  artifacts:
+    when: always
+    expire_in: 7 days
+    paths:
+      - coverage/
+      - test-results/
+
+security_audit:
+  stage: validate
+  script:
+    - npm audit --audit-level=critical --json > npm-audit.json
+  artifacts:
+    when: always
+    expire_in: 7 days
+    paths:
+      - npm-audit.json
 
 build_core_shell_docs:
   stage: build
@@ -303,11 +324,14 @@ package_release:
     - mkdir -p release
     - tar -czf "release/release-$CI_COMMIT_SHORT_SHA.tgz" dist
     - find dist -maxdepth 1 -mindepth 1 -type d -printf '%f\n' | sort
+    - npm run ci:smoke
+    - npm run perf:build-metrics
   artifacts:
     expire_in: 14 days
     paths:
       - release/
       - dist/
+      - deliverables/build-metrics.json
 
 deploy_staging:
   stage: deploy
