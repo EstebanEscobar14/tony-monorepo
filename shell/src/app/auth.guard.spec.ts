@@ -36,4 +36,28 @@ describe('requireSession', () => {
 
     expect(result).toBe(true);
   });
+
+  it('rejects expired or tampered sessions from storage', () => {
+    const router = TestBed.inject(Router);
+
+    localStorage.setItem(
+      'tony.auth.session',
+      JSON.stringify({
+        username: 'candidate',
+        displayName: 'Candidate',
+        role: 'admin',
+        permissions: ['*'],
+        loggedAt: '2024-01-01T00:00:00.000Z',
+        expiresAt: '2024-01-01T08:00:00.000Z',
+      })
+    );
+
+    const result = TestBed.runInInjectionContext(() =>
+      requireSession(['admin'])({} as never, [new UrlSegment('admin', {})])
+    );
+
+    expect(result instanceof UrlTree).toBe(true);
+    expect(router.serializeUrl(result as UrlTree)).toBe('/auth?redirect=%2Fadmin');
+    expect(localStorage.getItem('tony.auth.session')).toBeNull();
+  });
 });
