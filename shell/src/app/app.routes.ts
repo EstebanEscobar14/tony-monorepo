@@ -1,5 +1,6 @@
 import { Route } from '@angular/router';
 import { requireSession } from './auth.guard';
+import { angularRemoteContracts, loadRemoteRoutes } from './mfe-contracts';
 
 export const appRoutes: Route[] = [
   {
@@ -8,15 +9,17 @@ export const appRoutes: Route[] = [
   },
   {
     path: 'auth',
-    loadChildren: () => import('mfeAuth/Routes').then((m) => m.remoteRoutes),
+    loadChildren: () => loadRemoteRoutes(angularRemoteContracts.auth, () => import('mfeAuth/Routes')),
   },
   {
     path: 'payments',
-    loadChildren: () => import('mfePayments/Routes').then((m) => m.remoteRoutes),
+    loadChildren: () =>
+      loadRemoteRoutes(angularRemoteContracts.payments, () => import('mfePayments/Routes')),
   },
   {
     path: 'treasury',
-    loadChildren: () => import('mfeTreasury/Routes').then((m) => m.remoteRoutes),
+    loadChildren: () =>
+      loadRemoteRoutes(angularRemoteContracts.treasury, () => import('mfeTreasury/Routes')),
   },
   {
     path: 'analytics',
@@ -26,17 +29,19 @@ export const appRoutes: Route[] = [
   {
     path: 'compliance',
     canMatch: [requireSession(['compliance', 'admin'])],
-    loadChildren: () => import('mfeCompliance/Routes').then((m) => m.remoteRoutes),
+    loadChildren: () =>
+      loadRemoteRoutes(angularRemoteContracts.compliance, () => import('mfeCompliance/Routes')),
   },
   {
     path: 'onboarding',
     canMatch: [requireSession(['operator', 'admin'])],
-    loadChildren: () => import('mfeOnboarding/Routes').then((m) => m.remoteRoutes),
+    loadChildren: () =>
+      loadRemoteRoutes(angularRemoteContracts.onboarding, () => import('mfeOnboarding/Routes')),
   },
   {
     path: 'admin',
     canMatch: [requireSession(['admin'])],
-    loadChildren: () => import('mfeAdmin/Routes').then((m) => m.remoteRoutes),
+    loadChildren: () => loadRemoteRoutes(angularRemoteContracts.admin, () => import('mfeAdmin/Routes')),
   },
   {
     path: '**',

@@ -11,7 +11,10 @@
   @if (loadFailed()) {
     <div tonAlert variant="destructive">
       <h3 tonAlertTitle>No se pudo cargar el dashboard remoto</h3>
-      <p tonAlertDescription>Revisa que el remote React este disponible en el puerto esperado.</p>
+      <p tonAlertDescription>
+        Revisa que el remote React este disponible y que su URL use un host/protocolo permitido.
+      </p>
+      <button tonBtn type="button" (click)="retry()">Reintentar dashboard</button>
     </div>
   } @else if (!ready()) {
     <div tonAlert variant="info">
