@@ -23,6 +23,16 @@ import {
   type ComplianceCaseStatus,
 } from '@tony-ui/utils';
 
+function escapeCsvValue(value: string | number): string {
+  const serialized = String(value);
+
+  if (!/[",\n\r]/.test(serialized)) {
+    return serialized;
+  }
+
+  return `"${serialized.replace(/"/g, '""')}"`;
+}
+
 @Component({
   selector: 'app-compliance-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -95,7 +105,9 @@ export class CompliancePageComponent {
     const lines = [
       ['id', 'title', 'jurisdiction', 'status', 'priority', 'updatedAt'].join(','),
       ...this.cases().map((item) =>
-        [item.id, `"${item.title}"`, item.jurisdiction, item.status, item.priority, item.updatedAt].join(',')
+        [item.id, item.title, item.jurisdiction, item.status, item.priority, item.updatedAt]
+          .map(escapeCsvValue)
+          .join(',')
       ),
     ];
     const blob = new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
