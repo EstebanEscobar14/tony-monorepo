@@ -1,6 +1,6 @@
 export const HOME_EN = {
   hero: {
-    title: 'TonyUI',
+    title: 'Capital Flow',
     description: 'Beautiful, accessible Angular components built with Tailwind CSS v4 and Signals. Copy-paste or install — you own the code.',
     getStarted: 'Get Started',
     viewComponents: 'View Components',

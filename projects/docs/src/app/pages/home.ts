@@ -35,7 +35,7 @@ import { BrandLogoComponent } from '../shared/brand-logo';
     <section class="relative overflow-hidden border-b border-border bg-gradient-to-b from-primary/5 via-background to-background">
       <div class="mx-auto max-w-6xl px-6 py-24 text-center sm:py-32 lg:py-40">
         <div class="mx-auto mb-8 flex justify-center">
-          <docs-brand-logo [size]="128" label="TonyUI logo" />
+          <docs-brand-logo [size]="128" label="Capital Flow logo" />
         </div>
         <h1 class="text-5xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl">
           <span class="bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">{{ t().hero.title }}</span>
