@@ -226,7 +226,7 @@ flowchart LR
 
 Ubicacion:
 
-- [shell](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/shell)
+- [shell](./shell)
 
 Responsabilidades:
 
@@ -250,13 +250,13 @@ Rutas principales:
 
 Archivo clave:
 
-- [app.routes.ts](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/shell/src/app/app.routes.ts)
+- [app.routes.ts](./shell/src/app/app.routes.ts)
 
 ## 7.2 `mfe-auth`
 
 Ubicacion:
 
-- [apps/mfe-auth](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/apps/mfe-auth)
+- [apps/mfe-auth](./apps/mfe-auth)
 
 Responsabilidad:
 
@@ -267,7 +267,7 @@ Responsabilidad:
 
 Ubicacion:
 
-- [apps/mfe-payments](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/apps/mfe-payments)
+- [apps/mfe-payments](./apps/mfe-payments)
 
 Responsabilidad:
 
@@ -277,7 +277,7 @@ Responsabilidad:
 
 Ubicacion:
 
-- [apps/mfe-treasury](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/apps/mfe-treasury)
+- [apps/mfe-treasury](./apps/mfe-treasury)
 
 Responsabilidad:
 
@@ -287,7 +287,7 @@ Responsabilidad:
 
 Ubicacion:
 
-- [apps/mfe-compliance](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/apps/mfe-compliance)
+- [apps/mfe-compliance](./apps/mfe-compliance)
 
 Responsabilidad:
 
@@ -297,7 +297,7 @@ Responsabilidad:
 
 Ubicacion:
 
-- [apps/mfe-onboarding](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/apps/mfe-onboarding)
+- [apps/mfe-onboarding](./apps/mfe-onboarding)
 
 Responsabilidad:
 
@@ -307,7 +307,7 @@ Responsabilidad:
 
 Ubicacion:
 
-- [apps/mfe-admin](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/apps/mfe-admin)
+- [apps/mfe-admin](./apps/mfe-admin)
 
 Responsabilidad:
 
@@ -317,7 +317,7 @@ Responsabilidad:
 
 Ubicacion:
 
-- [apps/mfe-analytics](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/apps/mfe-analytics)
+- [apps/mfe-analytics](./apps/mfe-analytics)
 
 Responsabilidad:
 
@@ -330,8 +330,8 @@ Caracteristica diferencial:
 
 Archivos clave:
 
-- [analytics-element.tsx](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/apps/mfe-analytics/src/app/analytics-element.tsx)
-- [analytics-host.component.ts](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/shell/src/app/analytics-host.component.ts)
+- [analytics-element.tsx](./apps/mfe-analytics/src/app/analytics-element.tsx)
+- [analytics-host.component.ts](./shell/src/app/analytics-host.component.ts)
 
 ---
 
@@ -341,7 +341,7 @@ Archivos clave:
 
 Ubicacion:
 
-- [projects/core](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/projects/core)
+- [projects/core](./projects/core)
 
 Rol:
 
@@ -360,13 +360,13 @@ Incluye:
 
 Superficie publica:
 
-- [public-api.ts](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/projects/core/src/public-api.ts)
+- [public-api.ts](./projects/core/src/public-api.ts)
 
 ## 8.2 `library/utils`
 
 Ubicacion:
 
-- [library/utils](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/library/utils)
+- [library/utils](./library/utils)
 
 Rol:
 
@@ -376,13 +376,13 @@ Rol:
 
 Ejemplo clave:
 
-- [auth-session.ts](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/library/utils/src/lib/auth-session.ts)
+- [auth-session.ts](./library/utils/src/lib/auth-session.ts)
 
 ## 8.3 `projects/docs`
 
 Ubicacion:
 
-- [projects/docs](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/projects/docs)
+- [projects/docs](./projects/docs)
 
 Rol:
 
@@ -479,8 +479,8 @@ Resultado verificado:
 
 Archivos clave:
 
-- [playwright.config.ts](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/playwright.config.ts)
-- [package.json](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/package.json)
+- [playwright.config.ts](./playwright.config.ts)
+- [package.json](./package.json)
 
 ## 11.2 Quality gates
 
@@ -522,7 +522,7 @@ Esto forma parte de los hallazgos honestos del proyecto y es una oportunidad cla
 
 Archivo:
 
-- [.github/workflows/ci.yml](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/.github/workflows/ci.yml)
+- [.github/workflows/ci.yml](./.github/workflows/ci.yml)
 
 Funcion:
 
@@ -539,7 +539,7 @@ Pasos:
 
 Archivo:
 
-- [.gitlab-ci.yml](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/.gitlab-ci.yml)
+- [.gitlab-ci.yml](./.gitlab-ci.yml)
 
 Es el pipeline mas completo del repositorio.
 
@@ -586,7 +586,7 @@ Este pipeline no debe venderse como el estado final absoluto de una gran fintech
 
 Archivo:
 
-- [docker-compose.yml](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/docker-compose.yml)
+- [docker-compose.yml](./docker-compose.yml)
 
 Sirve para levantar localmente:
 
@@ -604,7 +604,7 @@ Es util para:
 
 Ubicacion:
 
-- [deploy/docker](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/deploy/docker)
+- [deploy/docker](./deploy/docker)
 
 Cada app tiene su Dockerfile.
 
@@ -617,12 +617,12 @@ Beneficio:
 
 Ubicacion:
 
-- [deploy/nginx](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/deploy/nginx)
+- [deploy/nginx](./deploy/nginx)
 
 Archivos principales:
 
-- [spa.conf](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/deploy/nginx/spa.conf)
-- [static.conf](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/deploy/nginx/static.conf)
+- [spa.conf](./deploy/nginx/spa.conf)
+- [static.conf](./deploy/nginx/static.conf)
 
 Responsabilidades:
 
@@ -635,7 +635,7 @@ Responsabilidades:
 
 Archivo:
 
-- [render.yaml](/C:/Users/juan.escobar/Desktop/mono-repo/tony-monorepo/render.yaml)
+- [render.yaml](./render.yaml)
 
 Modela despliegue por servicio:
 
