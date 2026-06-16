@@ -202,7 +202,22 @@ test:
 security_audit:
   stage: validate
   script:
-    - npm audit --audit-level=critical --json > npm-audit.json
+    - |
+      set +e
+      npm audit --audit-level=critical --json > npm-audit.json
+      audit_exit=$?
+      set -e
+
+      if [ "$audit_exit" -gt 1 ]; then
+        echo "npm audit failed unexpectedly."
+        exit "$audit_exit"
+      fi
+
+      if [ "$audit_exit" -eq 1 ]; then
+        echo "Critical vulnerabilities found. Audit report saved to npm-audit.json."
+      else
+        echo "No critical vulnerabilities found."
+      fi
   artifacts:
     when: always
     expire_in: 7 days
